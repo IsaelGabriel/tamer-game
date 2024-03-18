@@ -1,5 +1,6 @@
 extends Node
 
+var _skill_names = ["Hit","Hit","Hit","Hit","Heal","Heal","Heal"]
 var _skills = []
 
 var skills_available = []
@@ -7,15 +8,35 @@ var hand = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	for i in range(12):
-		_skills.append("Skill %d" % i)
+	load_skills()
 
-	skills_available = _skills.duplicate()
+func load_skills():
+	for skill_name in _skill_names:
+		var skill_resource = CustomResourceLoader.information["skills"][skill_name].duplicate()
+		var skill = {}
+		skill["name"] = skill_name
+		skill["description"] = skill_resource["description"]
+		skill["target"] = skill_resource["target"]
+		match skill_resource["type"]:
+			"attack":
+				skill["value"] = skill_resource["base_damage"]
+				match skill_resource["formula"]:
+					"basic":
+						skill["method"] = "basic_attack"
+						break
+				break
+			"healing":
+				skill["value"] = skill_resource["base_healing"]
+				match skill_resource["formula"]:
+					"basic":
+						skill["method"] = "basic_healing"
+						break
+				break
+		_skills.append(skill)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	if Input.is_action_just_pressed("ui_accept"):
-		refresh_hand()
+func call_skill_from_hand(index: int):
+	call(hand[index]["method"], hand[index])
+	hand.remove_at(index)
 
 func refresh_hand():
 	hand = []
@@ -32,3 +53,12 @@ func refresh_hand():
 		skills_available = _skills.duplicate()
 		print("REFRESHED SKILLS\n")
 		
+
+# Skill functions
+
+func basic_attack(skill_info: Dictionary):
+	# TODO: Ask for target
+	print("ATTACK CALLED: %s" % skill_info["name"])
+	
+func basic_healing(skill_info: Dictionary):
+	print("HEALING CAST: %s" % skill_info["name"])
