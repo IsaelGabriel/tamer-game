@@ -1,12 +1,12 @@
 {
 	"Hit" : {
-		"type" : "attack"
+		"type" : "attack",
 		"description" : "Hit once, causing %d damage.",
 		"base_damage" : 5,
 		"formula" : "basic"
 	},
 	"Heal" : {
-		"type" : "healing"
+		"type" : "healing",
 		"description" : "Restores %d HP.",
 		"base_healing" : 5,
 		"formula" : "basic"
