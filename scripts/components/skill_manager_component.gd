@@ -2,24 +2,19 @@ extends Node
 
 class_name SkillManagerComponent
 
-var _skill_names = ["Hit","Hit","Hit","Hit","Heal","Heal","Heal"]
 var _skills = []
 
 var skills_available = []
 var hand = []
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	load_skills()
-	refresh_skills()
-	refresh_hand()
-
-func load_skills():
-	for skill_name in _skill_names:
+func load_skills(skill_names: Array):
+	for skill_name in skill_names:
 		var skill = CustomResourceLoader.information["skills"][skill_name].duplicate()
 		skill["name"] = skill_name
 		
 		_skills.append(skill)
+	refresh_skills()
+	refresh_hand()
 
 func call_skill_from_hand(index: int):
 	# TODO: Method that handles targets (called before skill)
