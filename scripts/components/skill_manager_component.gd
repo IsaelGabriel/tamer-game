@@ -11,6 +11,7 @@ var hand = []
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	load_skills()
+	refresh_skills()
 	refresh_hand()
 
 func load_skills():
@@ -37,11 +38,11 @@ func refresh_hand():
 		hand.append(skills_available[rng])
 		skills_available.remove_at(rng)
 	
-		
-	if len(skills_available) == 0:
-		skills_available = _skills.duplicate()
-		print("REFRESHED SKILLS\n")
-		
+	if len(skills_available) == 0: refresh_skills()
+
+func refresh_skills():
+	skills_available = _skills.duplicate()
+	print("REFRESHED SKILLS\n")
 
 # Skill functions
 
