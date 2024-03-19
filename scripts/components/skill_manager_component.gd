@@ -1,5 +1,7 @@
 extends Node
 
+class_name SkillManagerComponent
+
 var _skill_names = ["Hit","Hit","Hit","Hit","Heal","Heal","Heal"]
 var _skills = []
 
@@ -9,6 +11,7 @@ var hand = []
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	load_skills()
+	refresh_hand()
 
 func load_skills():
 	for skill_name in _skill_names:
@@ -21,6 +24,11 @@ func call_skill_from_hand(index: int):
 	# TODO: Method that handles targets (called before skill)
 	call(hand[index]["function"], hand[index])
 	hand.remove_at(index)
+	if len(hand) == 0: refresh_hand()
+	
+	for skill in hand:
+		print(skill)
+	print()
 
 func refresh_hand():
 	hand = []
@@ -29,9 +37,6 @@ func refresh_hand():
 		hand.append(skills_available[rng])
 		skills_available.remove_at(rng)
 	
-	for skill in hand:
-		print(skill)
-	print()
 		
 	if len(skills_available) == 0:
 		skills_available = _skills.duplicate()
