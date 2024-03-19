@@ -2,15 +2,15 @@
 	"Hit" : {
 		"type" : "attack",
 		"description" : "Hit once, causing %d damage.",
+		"function": "basic_attack",
 		"base_damage" : 5,
-		"formula" : "basic",
 		"target" : "enemy"
 	},
 	"Heal" : {
 		"type" : "healing",
 		"description" : "Restores %d HP.",
+		"function": "basic_healing",
 		"base_healing" : 5,
-		"formula" : "basic",
 		"target" : "self"
 	}
 }

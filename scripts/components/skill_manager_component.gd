@@ -12,30 +12,14 @@ func _ready():
 
 func load_skills():
 	for skill_name in _skill_names:
-		var skill_resource = CustomResourceLoader.information["skills"][skill_name].duplicate()
-		var skill = {}
+		var skill = CustomResourceLoader.information["skills"][skill_name].duplicate()
 		skill["name"] = skill_name
-		skill["description"] = skill_resource["description"]
-		skill["target"] = skill_resource["target"]
-		match skill_resource["type"]:
-			"attack":
-				skill["value"] = skill_resource["base_damage"]
-				match skill_resource["formula"]:
-					"basic":
-						skill["method"] = "basic_attack"
-						break
-				break
-			"healing":
-				skill["value"] = skill_resource["base_healing"]
-				match skill_resource["formula"]:
-					"basic":
-						skill["method"] = "basic_healing"
-						break
-				break
+		
 		_skills.append(skill)
 
 func call_skill_from_hand(index: int):
-	call(hand[index]["method"], hand[index])
+	# TODO: Method that handles targets (called before skill)
+	call(hand[index]["function"], hand[index])
 	hand.remove_at(index)
 
 func refresh_hand():
@@ -57,7 +41,6 @@ func refresh_hand():
 # Skill functions
 
 func basic_attack(skill_info: Dictionary):
-	# TODO: Ask for target
 	print("ATTACK CALLED: %s" % skill_info["name"])
 	
 func basic_healing(skill_info: Dictionary):
