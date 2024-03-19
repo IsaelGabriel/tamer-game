@@ -17,6 +17,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 CustomResourceLoader="*res://scripts/resource_loader.gd"
+PlayerMonsterManager="*res://scripts/player_monster_manager.gd"
 
 [display]
 
