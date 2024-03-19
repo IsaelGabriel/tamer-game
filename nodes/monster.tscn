@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://b8kqptfl2l70e"]
 
-[ext_resource type="Texture2D" uid="uid://cmvenrvmgypnb" path="res://icon.svg" id="1_87ia1"]
+[ext_resource type="Texture2D" uid="uid://co2agy24wno1q" path="res://icon.svg" id="1_87ia1"]
 [ext_resource type="Script" path="res://scripts/monster.gd" id="1_vbupq"]
 [ext_resource type="Script" path="res://scripts/components/skill_manager_component.gd" id="3_jasgr"]
 
