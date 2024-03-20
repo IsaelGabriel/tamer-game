@@ -21,10 +21,6 @@ func call_skill_from_hand(index: int):
 	call(hand[index]["function"], hand[index])
 	hand.remove_at(index)
 	if len(hand) == 0: refresh_hand()
-	
-	for skill in hand:
-		print(skill)
-	print()
 
 func refresh_hand():
 	hand = []
@@ -37,7 +33,6 @@ func refresh_hand():
 
 func refresh_skills():
 	skills_available = _skills.duplicate()
-	print("REFRESHED SKILLS\n")
 
 # Skill functions
 
