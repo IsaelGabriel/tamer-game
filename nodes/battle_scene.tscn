@@ -1,4 +1,7 @@
-[gd_scene format=3 uid="uid://cp4pqvcpj7qjq"]
+[gd_scene load_steps=3 format=3 uid="uid://cp4pqvcpj7qjq"]
+
+[ext_resource type="Script" path="res://nodes/battle_monster.gd" id="1_bi648"]
+[ext_resource type="Script" path="res://scripts/components/skill_manager_component.gd" id="2_sat5o"]
 
 [node name="BattleScene" type="Node2D"]
 
@@ -18,4 +21,10 @@ offset_top = 592.0
 offset_right = 1280.0
 offset_bottom = 720.0
 
-[node name="BattleMonster" type="Node2D" parent="."]
+[node name="BattleMonster" type="Node2D" parent="." node_paths=PackedStringArray("skill_manager", "skill_card_container")]
+script = ExtResource("1_bi648")
+skill_manager = NodePath("SkillManagerComponent")
+skill_card_container = NodePath("../UI/SkillCardContainer")
+
+[node name="SkillManagerComponent" type="Node" parent="BattleMonster"]
+script = ExtResource("2_sat5o")
