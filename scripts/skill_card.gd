@@ -9,7 +9,7 @@ var skill_name: String = "Skill" :
 		name_label.text = value
 		skill_name = value
 
-var selected = false : 
+var selected = true : 
 	set(value):
 		if value:
 			position.y = -20

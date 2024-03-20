@@ -43,3 +43,5 @@ func _process(_delta):
 				skill_card.skill_name = skill["name"]
 				skill_card_container.add_child(skill_card)
 		selected_skill_index = 0
+		await get_tree().create_timer(0.01).timeout
+		skill_card_container.get_child(0).selected = true
