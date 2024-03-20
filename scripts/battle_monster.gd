@@ -6,6 +6,7 @@ var monster: Monster = Monster.new("Test Monster")
 
 @export var skill_manager: SkillManagerComponent
 @export var skill_card_container: HBoxContainer
+@export var sprite: Sprite2D
 
 @onready var skill_card_prefab = load("res://nodes/skill_card.tscn")
 

@@ -1,9 +1,16 @@
-[gd_scene load_steps=3 format=3 uid="uid://lm2c4ump7fnf"]
+[gd_scene load_steps=4 format=3 uid="uid://lm2c4ump7fnf"]
 
-[ext_resource type="Texture2D" uid="uid://co2agy24wno1q" path="res://icon.svg" id="1_1akrb"]
 [ext_resource type="Script" path="res://scripts/skill_card.gd" id="1_6ou5y"]
+[ext_resource type="Texture2D" uid="uid://b8cn5c5ji3hp3" path="res://sprite_atlas.png" id="1_bpr5w"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ib546"]
+atlas = ExtResource("1_bpr5w")
+region = Rect2(16, 0, 16, 16)
 
 [node name="SkillCard" type="TextureRect" node_paths=PackedStringArray("name_label")]
+self_modulate = Color(0.192157, 0.537255, 0.639216, 1)
+texture_filter = 1
+custom_minimum_size = Vector2(128, 128)
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -14,7 +21,7 @@ offset_top = -128.0
 offset_right = 64.0
 grow_horizontal = 2
 grow_vertical = 0
-texture = ExtResource("1_1akrb")
+texture = SubResource("AtlasTexture_ib546")
 script = ExtResource("1_6ou5y")
 name_label = NodePath("Label")
 
