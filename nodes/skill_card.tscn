@@ -10,7 +10,7 @@ region = Rect2(16, 0, 16, 16)
 [node name="SkillCard" type="TextureRect" node_paths=PackedStringArray("name_label")]
 self_modulate = Color(0.192157, 0.537255, 0.639216, 1)
 texture_filter = 1
-custom_minimum_size = Vector2(128, 128)
+custom_minimum_size = Vector2(64, 64)
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
