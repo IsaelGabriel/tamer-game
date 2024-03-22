@@ -29,11 +29,13 @@ grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 
-[node name="BattleMonster" type="Node2D" parent="." node_paths=PackedStringArray("skill_manager", "skill_card_container", "sprite")]
+[node name="BattleMonster" type="Node2D" parent="." node_paths=PackedStringArray("skill_manager", "skill_card_container", "sprite", "base", "goal")]
 script = ExtResource("1_bi648")
 skill_manager = NodePath("SkillManagerComponent")
 skill_card_container = NodePath("../UI/SkillCardContainer")
 sprite = NodePath("Sprite2D")
+base = NodePath("Base")
+goal = NodePath("Goal")
 
 [node name="Sprite2D" type="Sprite2D" parent="BattleMonster"]
 position = Vector2(432, 369)
@@ -41,6 +43,20 @@ scale = Vector2(5, 5)
 texture = ExtResource("2_1g3d7")
 region_enabled = true
 region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Base" type="Sprite2D" parent="BattleMonster"]
+position = Vector2(90, 369)
+scale = Vector2(5, 5)
+texture = ExtResource("2_1g3d7")
+region_enabled = true
+region_rect = Rect2(32, 0, 16, 16)
+
+[node name="Goal" type="Sprite2D" parent="BattleMonster"]
+position = Vector2(600, 369)
+scale = Vector2(5, 5)
+texture = ExtResource("2_1g3d7")
+region_enabled = true
+region_rect = Rect2(32, 0, 16, 16)
 
 [node name="SkillManagerComponent" type="Node" parent="BattleMonster"]
 script = ExtResource("2_sat5o")
