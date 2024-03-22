@@ -52,9 +52,6 @@ class BMSAwaitCommand :
 					var skill_card = _battle_monster.skill_card_prefab.instantiate()
 					skill_card.skill_name = skill["name"]
 					skill_card_container.add_child(skill_card)
-			selected_skill_index = 0
-			await _battle_monster.get_tree().create_timer(0.01).timeout
-			skill_card_container.get_child(0).selected = true
 			_battle_monster.state = BMSReturn.new(_battle_monster)
 	
 	func end():

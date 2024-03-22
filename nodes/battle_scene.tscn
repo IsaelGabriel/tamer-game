@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://scripts/components/skill_manager_component.gd" id="2_sat5o"]
 
 [node name="BattleScene" type="Node2D"]
-texture_filter = 1
+texture_filter = 5
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
