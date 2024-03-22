@@ -45,13 +45,10 @@ class BMSAwaitCommand :
 		if Input.is_action_just_pressed("ui_right"):
 			selected_skill_index += 1
 		if Input.is_action_just_pressed("ui_accept"):
+			var skill = skill_manager.hand[selected_skill_index]
 			skill_manager.call_skill_from_hand(selected_skill_index)
+			_battle_monster.called_skill.emit(_battle_monster, skill)
 			skill_card_container.remove_child(skill_card_container.get_child(selected_skill_index))
-			if skill_card_container.get_child_count() == 0:
-				for skill in skill_manager.hand:
-					var skill_card = _battle_monster.skill_card_prefab.instantiate()
-					skill_card.skill_name = skill["name"]
-					skill_card_container.add_child(skill_card)
 			_battle_monster.state = BMSReturn.new(_battle_monster)
 	
 	func end():
@@ -122,6 +119,8 @@ var monster: Monster = Monster.new("Test Monster")
 			state.end()
 		state = value
 		state.start()
+
+signal called_skill(battle_monster: BattleMonster, skill: String)
 
 func _ready():
 	skill_manager.load_skills(monster.skills)
