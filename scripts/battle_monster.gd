@@ -32,6 +32,9 @@ class BMSAwaitCommand :
 	func start():
 		skill_manager = _battle_monster.skill_manager
 		skill_card_container = _battle_monster.skill_card_container
+		
+		skill_manager.refresh_hand()
+		
 		for skill in skill_manager.hand:
 			var skill_card = _battle_monster.skill_card_prefab.instantiate()
 			skill_card.skill_name = skill["name"]

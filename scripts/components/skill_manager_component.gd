@@ -23,13 +23,13 @@ func call_skill_from_hand(index: int):
 	if len(hand) == 0: refresh_hand()
 
 func refresh_hand():
-	hand = []
-	for i in range(min(4, len(skills_available))):
+	if len(hand) >= 4: return
+	for i in range(min(4-len(hand), len(skills_available))):
 		var rng = randi() % len(skills_available)
 		hand.append(skills_available[rng])
 		skills_available.remove_at(rng)
 	
-	if len(skills_available) == 0: refresh_skills()
+	if len(skills_available) == 0 and len(hand) == 0: refresh_skills()
 
 func refresh_skills():
 	skills_available = _skills.duplicate()
