@@ -1,3 +1,5 @@
+extends Node
+
 enum SkillType {
 	PHYSICAL,
 	EFFECT
