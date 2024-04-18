@@ -37,7 +37,7 @@ class BMSAwaitCommand :
 		
 		for skill in skill_manager.hand:
 			var skill_card = _battle_monster.skill_card_prefab.instantiate()
-			skill_card.skill_name = skill["name"]
+			skill_card.skill_name = skill
 			skill_card_container.add_child(skill_card)
 		await _battle_monster.get_tree().create_timer(0.01).timeout
 		skill_card_container.get_child(0).selected = true
@@ -134,4 +134,7 @@ func _ready():
 func _process(delta):
 	if state != null:
 		state.process(delta)
+
+func get_monster():
+	return monster
 

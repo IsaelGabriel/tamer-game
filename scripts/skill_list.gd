@@ -1,4 +1,4 @@
-extends Node
+class_name SkillList
 
 enum SkillType {
 	PHYSICAL,
@@ -11,21 +11,24 @@ enum TargetType {
 	ENEMY
 }
 
-const SKILLS = [
-	{ # 0x00
-		"name" : "Hit",
+const SKILLS = {
+	"Hit" : { # 0x00
 		"type" : SkillType.PHYSICAL,
 		"description" : "Hit once, causing physical damage.",
 		"target" : TargetType.ENEMY,
-		"effect" : [
-			["register", [0x0, "Monster"]], # Load "Monster" into 0x0
-			["register", [0x1, "%s hits."]], # Load "%s hits." into 0x1
-			["format", [0x1, 0x1, [0x0]]], # Formats 0x1 and saves into 0x1
-			["show", [0x1]], # Shows 0x1
-			["register", [0x1, 5]], # Load 5 into 0x1
-			["deal_dmg", [0x1]], # Deal damage to target
-			["register", [0x0, "Success!"]], # Load "Success!"
-			["show", [0x0]] # Shows 0x0
-			]
+		"effect" : {
+			"active" : "skill_hit"
+		}
+	},
+	"Heal" : { # 0x01
+		"type" : SkillType.EFFECT,
+		"description" : "Restores HP.",
+		"target" : TargetType.SELF,
+		"effect" : {
+			"active" : "skill_heal"
+		},
+		"data" : {
+			"ammount" : 5
+		}
 	}
-]
+}
