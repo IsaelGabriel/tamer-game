@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 CustomResourceLoader="*res://scripts/resource_loader.gd"
 PlayerMonsterManager="*res://scripts/player_monster_manager.gd"
+SkillList="*res://scripts/skill_list.gd"
 
 [display]
 
