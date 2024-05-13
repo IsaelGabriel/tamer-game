@@ -1,0 +1,74 @@
+[gd_scene load_steps=6 format=3 uid="uid://copr1iswfcpss"]
+
+[ext_resource type="Texture2D" uid="uid://b8cn5c5ji3hp3" path="res://sprite_atlas.png" id="1_tnh32"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_abbqp"]
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Theme" id="Theme_md0be"]
+Panel/styles/panel = SubResource("StyleBoxFlat_abbqp")
+
+[sub_resource type="LabelSettings" id="LabelSettings_3o5ey"]
+font_size = 18
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1nwk8"]
+atlas = ExtResource("1_tnh32")
+region = Rect2(0, 0, 16, 16)
+
+[node name="DialogBox" type="CanvasLayer"]
+layer = -1
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -150.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 10
+
+[node name="Panel" type="Panel" parent="MarginContainer"]
+layout_mode = 2
+theme = SubResource("Theme_md0be")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
+
+[node name="Panel" type="Panel" parent="MarginContainer/MarginContainer"]
+visible = false
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce est libero, rhoncus eu interdum vel, iaculis id risus. Aenean purus orci, feugiat quis dolor venenatis, venenatis maximus neque. Vestibulum viverra metus a mauris vehicula, sit amet tincidunt libero aliquet. Curabitur vitae est gravida, sollicitudin arcu posuere, tincidunt sapien. Nam a leo ut metus ullamcorper venenatis. Nullam vitae facilisis eros. Vestibulum lacinia mollis eros eu fringilla. Quisque dapibus magna et blandit maximus. Sed sollicitudin viverra massa, sed porttitor purus rhoncus hendrerit. Vestibulum non egestas mi. Phasellus in pulvinar libero. Sed lacus lacus, dignissim nec rhoncus ac, consectetur nec sem. Pellentesque pretium tortor non diam eleifend, et interdum orci venenatis. "
+label_settings = SubResource("LabelSettings_3o5ey")
+autowrap_mode = 2
+max_lines_visible = 3
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/MarginContainer/HBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+texture_filter = 1
+custom_minimum_size = Vector2(16, 16)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+texture = SubResource("AtlasTexture_1nwk8")
