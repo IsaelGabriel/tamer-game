@@ -1,6 +1,8 @@
 extends CanvasLayer
 
-const CHAR_TIME = 0.1
+class_name DialogBox
+
+const CHAR_TIME = 0.05
 
 @onready var dialog_text = $MarginContainer/MarginContainer/HBoxContainer/DialogText
 @onready var next_icon = $MarginContainer/MarginContainer/HBoxContainer/NextIcon
@@ -11,7 +13,7 @@ var current_time: float
 func _ready():
 	dialog_text.text = ""
 	next_icon.modulate.a = 0x0
-	process_mode = Node.PROCESS_MODE_WHEN_PAUSED
+	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func _process(delta):
 	if current_time > 0:
@@ -20,8 +22,8 @@ func _process(delta):
 		handle_dialog(delta)
 
 func show_dialog(text: String):
-	get_tree().paused = true
 	dialog_text.text = ""
+	next_icon.modulate.a = 0x0
 	current_text = text
 
 func handle_dialog(delta):
@@ -32,4 +34,4 @@ func handle_dialog(delta):
 	else:
 		next_icon.modulate.a = 0xFF
 		if Input.is_action_just_pressed("ui_accept"):
-			get_tree().paused = false
+			DialogHandler.end_dialog()

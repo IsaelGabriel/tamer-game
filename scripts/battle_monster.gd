@@ -130,6 +130,7 @@ func _ready():
 	sprite.position = base.position
 	
 	state = BMSForward.new(self)
+	DialogHandler.display_dialog("%s has arrived!" % monster.name)
 
 func _process(delta):
 	if state != null:
