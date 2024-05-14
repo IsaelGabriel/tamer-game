@@ -20,6 +20,7 @@ class BMSEnemyForward:
 		sprite.flip_h = true
 	
 	func process(delta):
+		if BattleMonster.MOVEMENT_PAUSED: return
 		interpolation_timer += delta * speed * 0.01
 		interpolation_timer = min(interpolation_timer, 1.0)
 		sprite.position = base.position.lerp(goal.position, interpolation_timer)
@@ -44,6 +45,7 @@ class BMSEnemyReturn:
 		sprite.flip_h = false
 	
 	func process(delta):
+		if BattleMonster.MOVEMENT_PAUSED: return
 		interpolation_timer += delta * speed * 0.01
 		interpolation_timer = min(interpolation_timer, 1.0)
 		sprite.position = goal.position.lerp(base.position, interpolation_timer)

@@ -2,6 +2,8 @@ extends Node2D
 
 class_name BattleMonster
 
+static var MOVEMENT_PAUSED: bool = false
+
 class BattleMonsterState:
 	var _battle_monster
 	

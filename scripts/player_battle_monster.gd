@@ -1,7 +1,6 @@
-extends "res://scripts/battle_monster.gd"
+extends BattleMonster
 
 class_name PlayerBattleMonster
-
 
 class BMSAwaitCommand :
 	extends BattleMonsterState
@@ -21,6 +20,7 @@ class BMSAwaitCommand :
 	
 	
 	func start():
+		BattleMonster.MOVEMENT_PAUSED = true
 		skill_manager = _battle_monster.skill_manager
 		skill_card_container = _battle_monster.skill_card_container
 		
@@ -48,7 +48,8 @@ class BMSAwaitCommand :
 	func end():
 		for child in skill_card_container.get_children():
 			child.queue_free()
-			
+		BattleMonster.MOVEMENT_PAUSED = false
+
 class BMSForward:
 	extends BattleMonsterState
 	
@@ -67,6 +68,7 @@ class BMSForward:
 		sprite.flip_h = false
 	
 	func process(delta):
+		if BattleMonster.MOVEMENT_PAUSED: return
 		interpolation_timer += delta * speed * 0.01
 		interpolation_timer = min(interpolation_timer, 1.0)
 		sprite.position = base.position.lerp(goal.position, interpolation_timer)
@@ -91,6 +93,7 @@ class BMSReturn:
 		sprite.flip_h = true
 	
 	func process(delta):
+		if BattleMonster.MOVEMENT_PAUSED: return
 		interpolation_timer += delta * speed * 0.01
 		interpolation_timer = min(interpolation_timer, 1.0)
 		sprite.position = goal.position.lerp(base.position, interpolation_timer)
