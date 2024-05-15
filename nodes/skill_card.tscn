@@ -1,13 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://lm2c4ump7fnf"]
 
 [ext_resource type="Script" path="res://scripts/skill_card.gd" id="1_6ou5y"]
-[ext_resource type="Texture2D" uid="uid://bckokivt2fmie" path="res://sprite_atlas.png" id="1_bpr5w"]
+[ext_resource type="Texture2D" uid="uid://b8cn5c5ji3hp3" path="res://sprite_atlas.png" id="1_bpr5w"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ib546"]
 atlas = ExtResource("1_bpr5w")
 region = Rect2(16, 0, 16, 16)
 
-[node name="SkillCard" type="TextureRect" node_paths=PackedStringArray("name_label")]
+[node name="SkillCard" type="TextureRect" node_paths=PackedStringArray("name_label", "index_label")]
 self_modulate = Color(0.192157, 0.537255, 0.639216, 1)
 texture_filter = 1
 custom_minimum_size = Vector2(64, 64)
@@ -23,11 +23,27 @@ grow_horizontal = 2
 grow_vertical = 0
 texture = SubResource("AtlasTexture_ib546")
 script = ExtResource("1_6ou5y")
-name_label = NodePath("Label")
+name_label = NodePath("VBoxContainer/NameLabel")
+index_label = NodePath("VBoxContainer/IndexLabel")
 
-[node name="Label" type="Label" parent="."]
-layout_mode = 0
-offset_right = 80.0
-offset_bottom = 23.0
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="IndexLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "0
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NameLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
 text = "Skill name
 "
+horizontal_alignment = 1

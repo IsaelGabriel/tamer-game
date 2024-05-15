@@ -3,6 +3,7 @@ extends Control
 class_name SkillCard
 
 @export var name_label: Label
+@export var index_label: Label
 
 var skill_name: String = "Skill" :
 	set(value):
@@ -16,3 +17,8 @@ var selected = true :
 		else:
 			position.y = 0
 		selected = value
+
+var index = -1:
+	set(value):
+		index_label.text = str(value + 1) if (value >= 0) else ""
+		index = value

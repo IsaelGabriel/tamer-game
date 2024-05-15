@@ -22,7 +22,6 @@ atlas = ExtResource("1_tnh32")
 region = Rect2(0, 0, 16, 16)
 
 [node name="DialogBox" type="CanvasLayer"]
-layer = -1
 script = ExtResource("1_vyk5t")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]

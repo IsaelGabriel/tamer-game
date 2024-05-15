@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cp4pqvcpj7qjq"]
 
 [ext_resource type="Script" path="res://scripts/player_battle_monster.gd" id="1_ued1j"]
-[ext_resource type="Texture2D" uid="uid://bckokivt2fmie" path="res://sprite_atlas.png" id="2_1g3d7"]
+[ext_resource type="Texture2D" uid="uid://b8cn5c5ji3hp3" path="res://sprite_atlas.png" id="2_1g3d7"]
 [ext_resource type="Script" path="res://scripts/components/skill_manager_component.gd" id="2_sat5o"]
 [ext_resource type="Script" path="res://scripts/enemy_battle_monster.gd" id="4_auttc"]
 

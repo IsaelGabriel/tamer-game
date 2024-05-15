@@ -7,48 +7,30 @@ class BMSAwaitCommand :
 	
 	var skill_manager : SkillManagerComponent
 	var skill_card_container : HBoxContainer
-	
-	var selected_skill_index: int = 0:
-		set(value):
-			var hand_number = len(skill_manager.hand)
-			for child in skill_card_container.get_children():
-				child.selected = false
-			if value < 0: selected_skill_index = hand_number - 1
-			elif value >= hand_number: selected_skill_index = 0
-			else: selected_skill_index = value
-			skill_card_container.get_child(selected_skill_index).selected = true
-	
+	var called_skill: bool = false
 	
 	func start():
-		BattleMonster.MOVEMENT_PAUSED = true
 		skill_manager = _battle_monster.skill_manager
 		skill_card_container = _battle_monster.skill_card_container
-		
-		skill_manager.refresh_hand()
-		
-		for skill in skill_manager.hand:
-			var skill_card = _battle_monster.skill_card_prefab.instantiate()
-			skill_card.skill_name = skill
-			skill_card_container.add_child(skill_card)
-		await _battle_monster.get_tree().create_timer(0.01).timeout
-		skill_card_container.get_child(0).selected = true
+		call_first_skill()
+		if not called_skill: BattleMonster.MOVEMENT_PAUSED = true
 	
-	func process(_delta):
-		if Input.is_action_just_pressed("ui_left"):
-			selected_skill_index -= 1
-		if Input.is_action_just_pressed("ui_right"):
-			selected_skill_index += 1
-		if Input.is_action_just_pressed("ui_accept"):
-			var skill = skill_manager.hand[selected_skill_index]
-			skill_manager.call_skill_from_hand(selected_skill_index)
-			_battle_monster.called_skill.emit(_battle_monster, skill)
-			skill_card_container.remove_child(skill_card_container.get_child(selected_skill_index))
-			_battle_monster.state = BMSReturn.new(_battle_monster)
+	func process(delta):
+		if not called_skill: call_first_skill()
 	
 	func end():
-		for child in skill_card_container.get_children():
-			child.queue_free()
 		BattleMonster.MOVEMENT_PAUSED = false
+
+	func call_first_skill():
+		if not _battle_monster.skill_queue.is_empty():
+			var card = _battle_monster.skill_queue.pop_front()
+			var index = skill_card_container.get_children().find(card)
+			var skill = skill_manager.hand[index]
+			skill_manager.call_skill_from_hand(index)
+			_battle_monster.called_skill.emit(_battle_monster, skill)
+			_battle_monster.state = BMSReturn.new(_battle_monster)
+			called_skill = true
+			_battle_monster.refresh_skill_cards()
 
 class BMSForward:
 	extends BattleMonsterState
@@ -103,8 +85,64 @@ class BMSReturn:
 @export var skill_card_container: HBoxContainer
 
 @onready var skill_card_prefab = load("res://nodes/skill_card.tscn")
-		
+
+var skill_queue = []:
+	set(value):
+		while value.find(null) != -1:
+			value.erase(null)
+		skill_queue = value
+		refresh_skill_cards()
+var selected_skill_card_index: int = 0:
+		set(value):
+			var hand_number = len(skill_manager.hand)
+			for child in skill_card_container.get_children():
+				child.selected = false
+			if value < 0: selected_skill_card_index = hand_number - 1
+			elif value >= hand_number: selected_skill_card_index = 0
+			else: selected_skill_card_index = value
+			skill_card_container.get_child(selected_skill_card_index).selected = true
+
 
 func _ready():
 	super()
 	state = BMSForward.new(self)
+	refresh_skill_cards()
+
+func _process(delta):
+	super(delta)
+	process_skill_cards()
+
+func process_skill_cards():
+	if Input.is_action_just_pressed("ui_left"):
+		selected_skill_card_index -= 1
+	if Input.is_action_just_pressed("ui_right"):
+		selected_skill_card_index += 1
+	if Input.is_action_just_pressed("ui_accept"):
+		var card = skill_card_container.get_child(selected_skill_card_index)
+		if card in skill_queue:
+			skill_queue.erase(card)
+		else:
+			skill_queue.append(card)
+	refresh_skill_cards()
+		
+	
+func refresh_skill_cards():
+	var cards = skill_card_container.get_children()
+	var hand = skill_manager.hand
+	
+	if len(cards) > len(hand):
+		for i in range(len(hand), len(cards)):
+			cards[i].queue_free()
+	for i in range(0, len(hand)):
+		if i >= len(cards):
+			var skill_card = skill_card_prefab.instantiate()
+			skill_card_container.add_child(skill_card)
+			cards.append(skill_card)
+		cards[i].index = skill_queue.find(cards[i])
+		cards[i].skill_name = hand[i]
+		
+	await get_tree().create_timer(0.01).timeout
+	var i = selected_skill_card_index
+	selected_skill_card_index = 0
+	selected_skill_card_index = i
+	

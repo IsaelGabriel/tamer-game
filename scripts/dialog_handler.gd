@@ -20,4 +20,5 @@ func end_dialog():
 		text_queue.remove_at(0)
 	else:
 		current_box.queue_free()
+		await get_tree().create_timer(0.01).timeout
 		get_tree().paused = false
