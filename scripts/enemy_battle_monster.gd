@@ -10,12 +10,14 @@ class BMSEnemyForward:
 	var goal: Sprite2D
 	var sprite: Sprite2D
 	var interpolation_timer: float = 0.0
+	var skill_manager: SkillManagerComponent
 	
 	func start():
 		speed = _battle_monster.monster.speed
 		base = _battle_monster.base
 		goal = _battle_monster.goal
 		sprite = _battle_monster.sprite
+		skill_manager = _battle_monster.skill_manager
 		
 		sprite.flip_h = true
 	
@@ -25,6 +27,9 @@ class BMSEnemyForward:
 		interpolation_timer = min(interpolation_timer, 1.0)
 		sprite.position = base.position.lerp(goal.position, interpolation_timer)
 		if interpolation_timer >= 1.0:
+			var skill = skill_manager.hand[0]
+			skill_manager.call_skill_from_hand(0)
+			_battle_monster.called_skill.emit(_battle_monster, skill)
 			_battle_monster.state = BMSEnemyReturn.new(_battle_monster)
 
 class BMSEnemyReturn:
