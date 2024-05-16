@@ -13,13 +13,9 @@ class BMSAwaitCommand :
 		skill_manager = _battle_monster.skill_manager
 		skill_card_container = _battle_monster.skill_card_container
 		call_first_skill()
-		if not called_skill: BattleMonster.MOVEMENT_PAUSED = true
 	
 	func process(delta):
 		if not called_skill: call_first_skill()
-	
-	func end():
-		BattleMonster.MOVEMENT_PAUSED = false
 
 	func call_first_skill():
 		if not _battle_monster.skill_queue.is_empty():
@@ -28,9 +24,11 @@ class BMSAwaitCommand :
 			var skill = skill_manager.hand[index]
 			skill_manager.call_skill_from_hand(index)
 			_battle_monster.called_skill.emit(_battle_monster, skill)
-			_battle_monster.state = BMSReturn.new(_battle_monster)
 			called_skill = true
+			card.queue_free()
+			_battle_monster.skill_queue.erase(card)
 			_battle_monster.refresh_skill_cards()
+			_battle_monster.state = BMSReturn.new(_battle_monster)
 
 class BMSForward:
 	extends BattleMonsterState
@@ -86,12 +84,7 @@ class BMSReturn:
 
 @onready var skill_card_prefab = load("res://nodes/skill_card.tscn")
 
-var skill_queue = []:
-	set(value):
-		while value.find(null) != -1:
-			value.erase(null)
-		skill_queue = value
-		refresh_skill_cards()
+var skill_queue = []
 var selected_skill_card_index: int = 0:
 		set(value):
 			var hand_number = len(skill_manager.hand)
@@ -130,9 +123,6 @@ func refresh_skill_cards():
 	var cards = skill_card_container.get_children()
 	var hand = skill_manager.hand
 	
-	if len(cards) > len(hand):
-		for i in range(len(hand), len(cards)):
-			cards[i].queue_free()
 	for i in range(0, len(hand)):
 		if i >= len(cards):
 			var skill_card = skill_card_prefab.instantiate()
