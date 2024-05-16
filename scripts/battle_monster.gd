@@ -16,10 +16,10 @@ class BattleMonsterState:
 
 var monster: Monster = Monster.new("Test Monster")
 
-@export var skill_manager: SkillManagerComponent
-@export var sprite: Sprite2D
-@export var base: Sprite2D
-@export var goal: Sprite2D
+@onready var skill_manager: SkillManagerComponent = $SkillManagerComponent
+@onready var sprite: Sprite2D = $Sprite2D
+@onready var base: Sprite2D = $Base
+@onready var goal: Sprite2D = $Goal
 
 @onready var state: BattleMonsterState = null :
 	set(value):
@@ -33,8 +33,6 @@ signal called_skill(battle_monster: BattleMonster, skill: String)
 func _ready():
 	skill_manager.load_skills(monster.skills)
 	sprite.position = base.position
-	
-	DialogHandler.display_dialog("%s has arrived!" % monster.name)
 
 func _process(delta):
 	if state != null:

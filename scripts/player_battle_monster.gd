@@ -94,10 +94,12 @@ var selected_skill_card_index: int = 0:
 			elif value >= hand_number: selected_skill_card_index = 0
 			else: selected_skill_card_index = value
 			skill_card_container.get_child(selected_skill_card_index).selected = true
+
 var skill_cards_active = false:
 	set(value):
-		if value: skill_card_container.visible = true
+		if value == skill_cards_active: return
 		skill_cards_active = value
+		skill_card_container.visible = value
 
 func _ready():
 	super()
@@ -124,6 +126,7 @@ func process_skill_cards():
 		
 	
 func refresh_skill_cards():
+	if not skill_cards_active: return
 	var cards = skill_card_container.get_children()
 	var hand = skill_manager.hand
 	

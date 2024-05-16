@@ -1,9 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cp4pqvcpj7qjq"]
+[gd_scene load_steps=3 format=3 uid="uid://cp4pqvcpj7qjq"]
 
-[ext_resource type="Script" path="res://scripts/player_battle_monster.gd" id="1_ued1j"]
-[ext_resource type="Texture2D" uid="uid://b8cn5c5ji3hp3" path="res://sprite_atlas.png" id="2_1g3d7"]
-[ext_resource type="Script" path="res://scripts/components/skill_manager_component.gd" id="2_sat5o"]
-[ext_resource type="Script" path="res://scripts/enemy_battle_monster.gd" id="4_auttc"]
+[ext_resource type="PackedScene" uid="uid://dbt11im0ksdo8" path="res://nodes/player_battle_monster.tscn" id="1_080rf"]
+[ext_resource type="PackedScene" uid="uid://bef837h1bw5gu" path="res://nodes/enemy_battle_monster.tscn" id="2_bbqee"]
 
 [node name="BattleScene" type="Node2D"]
 texture_filter = 5
@@ -32,71 +30,21 @@ grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 
-[node name="PlayerBattleMonster" type="Node2D" parent="." node_paths=PackedStringArray("skill_card_container", "skill_manager", "sprite", "base", "goal")]
-texture_filter = 3
-position = Vector2(0, 92)
-scale = Vector2(0.6, 0.6)
-script = ExtResource("1_ued1j")
+[node name="PlayerBattleMonster" parent="." node_paths=PackedStringArray("skill_card_container") instance=ExtResource("1_080rf")]
 skill_card_container = NodePath("../UI/SkillCardContainer")
-skill_manager = NodePath("SkillManagerComponent")
-sprite = NodePath("Sprite2D")
-base = NodePath("Base")
-goal = NodePath("Goal")
 
-[node name="Sprite2D" type="Sprite2D" parent="PlayerBattleMonster"]
-position = Vector2(432, 369)
-scale = Vector2(5, 5)
-texture = ExtResource("2_1g3d7")
-region_enabled = true
-region_rect = Rect2(0, 0, 16, 16)
+[node name="PlayerBattleMonster2" parent="." node_paths=PackedStringArray("skill_card_container") instance=ExtResource("1_080rf")]
+position = Vector2(0, -10)
+skill_card_container = NodePath("../UI/SkillCardContainer")
 
-[node name="Base" type="Sprite2D" parent="PlayerBattleMonster"]
-position = Vector2(90, 369)
-scale = Vector2(5, 5)
-texture = ExtResource("2_1g3d7")
-region_enabled = true
-region_rect = Rect2(32, 0, 16, 16)
+[node name="PlayerBattleMonster3" parent="." node_paths=PackedStringArray("skill_card_container") instance=ExtResource("1_080rf")]
+position = Vector2(0, 201)
+skill_card_container = NodePath("../UI/SkillCardContainer")
 
-[node name="Goal" type="Sprite2D" parent="PlayerBattleMonster"]
-position = Vector2(600, 369)
-scale = Vector2(5, 5)
-texture = ExtResource("2_1g3d7")
-region_enabled = true
-region_rect = Rect2(32, 0, 16, 16)
+[node name="EnemyBattleMonster" parent="." instance=ExtResource("2_bbqee")]
 
-[node name="SkillManagerComponent" type="Node" parent="PlayerBattleMonster"]
-script = ExtResource("2_sat5o")
+[node name="EnemyBattleMonster2" parent="." instance=ExtResource("2_bbqee")]
+position = Vector2(400, -11)
 
-[node name="EnemyBattleMonster" type="Node2D" parent="." node_paths=PackedStringArray("skill_manager", "sprite", "base", "goal")]
-texture_filter = 3
-position = Vector2(400, 92)
-scale = Vector2(0.6, 0.6)
-script = ExtResource("4_auttc")
-skill_manager = NodePath("SkillManagerComponent")
-sprite = NodePath("Sprite2D")
-base = NodePath("Base")
-goal = NodePath("Goal")
-
-[node name="Sprite2D" type="Sprite2D" parent="EnemyBattleMonster"]
-position = Vector2(432, 369)
-scale = Vector2(5, 5)
-texture = ExtResource("2_1g3d7")
-region_enabled = true
-region_rect = Rect2(0, 0, 16, 16)
-
-[node name="Base" type="Sprite2D" parent="EnemyBattleMonster"]
-position = Vector2(600, 369)
-scale = Vector2(5, 5)
-texture = ExtResource("2_1g3d7")
-region_enabled = true
-region_rect = Rect2(32, 0, 16, 16)
-
-[node name="Goal" type="Sprite2D" parent="EnemyBattleMonster"]
-position = Vector2(90, 369)
-scale = Vector2(5, 5)
-texture = ExtResource("2_1g3d7")
-region_enabled = true
-region_rect = Rect2(32, 0, 16, 16)
-
-[node name="SkillManagerComponent" type="Node" parent="EnemyBattleMonster"]
-script = ExtResource("2_sat5o")
+[node name="EnemyBattleMonster3" parent="." instance=ExtResource("2_bbqee")]
+position = Vector2(400, 201)
