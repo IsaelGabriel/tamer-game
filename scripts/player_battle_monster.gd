@@ -94,7 +94,10 @@ var selected_skill_card_index: int = 0:
 			elif value >= hand_number: selected_skill_card_index = 0
 			else: selected_skill_card_index = value
 			skill_card_container.get_child(selected_skill_card_index).selected = true
-
+var skill_cards_active = false:
+	set(value):
+		if value: skill_card_container.visible = true
+		skill_cards_active = value
 
 func _ready():
 	super()
@@ -106,6 +109,7 @@ func _process(delta):
 	process_skill_cards()
 
 func process_skill_cards():
+	if not skill_cards_active: return
 	if Input.is_action_just_pressed("ui_left"):
 		selected_skill_card_index -= 1
 	if Input.is_action_just_pressed("ui_right"):
