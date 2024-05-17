@@ -6,22 +6,15 @@ class_name BattleMonsterCard
 @onready var hp_label: Label = $MarginContainer/VBoxContainer/HPLabel
 @onready var status_label: Label = $MarginContainer/VBoxContainer/StatusLabel
 
-var monster_name: String:
-	set(value):
-		name_label.text = value
-		monster_name = value
+var monster: Monster
 
-var hp_text: String:
+var selected = false : 
 	set(value):
-		hp_label.text = value
-		hp_text = value
+		position.y = -20 if value else 0
+		selected = value
 
-var status: Array:
-	set(value):
-		status_label.text = ", ".join(value)
-		status = value
-
-func _ready():
-	monster_name = "[NO_NAME]"
-	hp_text = "NULL"
-	status = []
+func _process(_delta):
+	if monster == null: return
+	name_label.text = monster.name
+	hp_label.text = "%d / %d" % [monster.hp, monster.max_hp]
+	status_label.text = ""

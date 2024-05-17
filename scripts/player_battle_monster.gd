@@ -118,10 +118,11 @@ func process_skill_cards():
 		selected_skill_card_index += 1
 	if Input.is_action_just_pressed("ui_accept"):
 		var card = skill_card_container.get_child(selected_skill_card_index)
-		if card in skill_queue:
-			skill_queue.erase(card)
-		else:
-			skill_queue.append(card)
+		if card != null:
+			if card in skill_queue:
+				skill_queue.erase(card)
+			else:
+				skill_queue.append(card)
 	refresh_skill_cards()
 		
 	

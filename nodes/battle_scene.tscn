@@ -2,12 +2,13 @@
 
 [ext_resource type="Script" path="res://scripts/battle_manager.gd" id="3_ewymg"]
 
-[node name="BattleScene" type="Node" node_paths=PackedStringArray("skill_card_container")]
+[node name="BattleScene" type="Node" node_paths=PackedStringArray("ui_container")]
 script = ExtResource("3_ewymg")
-skill_card_container = NodePath("UI/MarginContainer/SkillCardContainer")
+ui_container = NodePath("UI/MarginContainer")
 total_player_monsters = 3
 total_enemy_monsters = 3
-monster_y_offset = 200
+top_margin = 150.0
+bottom_margin = 150.0
 monster_scale = 0.8
 
 [node name="UI" type="MarginContainer" parent="."]
@@ -25,7 +26,3 @@ theme_override_constants/margin_top = 500
 [node name="Panel" type="Panel" parent="UI/MarginContainer"]
 visible = false
 layout_mode = 2
-
-[node name="SkillCardContainer" type="HBoxContainer" parent="UI/MarginContainer"]
-layout_mode = 2
-alignment = 1
