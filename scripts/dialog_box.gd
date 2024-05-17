@@ -2,7 +2,7 @@ extends CanvasLayer
 
 class_name DialogBox
 
-const CHAR_TIME = 0.05
+const CHAR_TIME = 0.025
 
 @onready var dialog_text = $MarginContainer/MarginContainer/HBoxContainer/DialogText
 @onready var next_icon = $MarginContainer/MarginContainer/HBoxContainer/NextIcon

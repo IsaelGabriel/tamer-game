@@ -55,6 +55,7 @@ func _ready():
 	
 	generate_monster_cards()
 	movement_countdown()
+	DialogHandler.display_dialog("BATTLE START IN %d SECONDS!!!" % int(movement_start_countdown))
 
 func calculate_monster_y(index: int, total: int) -> float:
 	var height = get_viewport().content_scale_size.y - (bottom_margin + top_margin)
