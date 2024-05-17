@@ -28,7 +28,15 @@ class BMSEnemyForward:
 		sprite.position = base.position.lerp(goal.position, interpolation_timer)
 		if interpolation_timer >= 1.0:
 			var skill = skill_manager.hand[0]
-			skill_manager.call_skill_from_hand(0)
+			var target: BattleMonster
+			match SkillList.SKILLS[skill]["target"]:
+				SkillList.TargetType.SELF:
+					target = _battle_monster
+				SkillList.TargetType.ENEMY:
+					target = BattleManager.CURRENT.player_monsters[randi_range(0, BattleManager.CURRENT.total_player_monsters-1)]
+				SkillList.TargetType.ALLY:
+					target = BattleManager.CURRENT.enemy_monsters[randi_range(0, BattleManager.CURRENT.total_enemy_monsters-1)]
+			skill_manager.call_skill_from_hand(0, target)
 			_battle_monster.called_skill.emit(_battle_monster, skill)
 			_battle_monster.state = BMSEnemyReturn.new(_battle_monster)
 

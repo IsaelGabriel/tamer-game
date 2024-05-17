@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://cp4pqvcpj7qjq"]
+
+[ext_resource type="Script" path="res://scripts/battle_manager.gd" id="3_ewymg"]
+
+[node name="BattleScene" type="Node" node_paths=PackedStringArray("ui_container")]
+script = ExtResource("3_ewymg")
+ui_container = NodePath("UI/MarginContainer")
+total_player_monsters = 3
+total_enemy_monsters = 3
+movement_start_countdown = 2.0
+top_margin = 150.0
+bottom_margin = 150.0
+monster_scale = 0.8
+
+[node name="UI" type="MarginContainer" parent="."]
+z_index = 2
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UI"]
+layout_mode = 2
+theme_override_constants/margin_top = 500
+
+[node name="Panel" type="Panel" parent="UI/MarginContainer"]
+visible = false
+layout_mode = 2

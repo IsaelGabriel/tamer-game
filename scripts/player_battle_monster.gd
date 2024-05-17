@@ -22,7 +22,7 @@ class BMSAwaitCommand :
 			var card = _battle_monster.skill_queue.pop_front()
 			var index = skill_card_container.get_children().find(card)
 			var skill = skill_manager.hand[index]
-			skill_manager.call_skill_from_hand(index)
+			skill_manager.call_skill_from_hand(index, BattleManager.CURRENT.enemy_monsters[0])
 			_battle_monster.called_skill.emit(_battle_monster, skill)
 			called_skill = true
 			card.queue_free()

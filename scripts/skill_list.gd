@@ -18,6 +18,9 @@ const SKILLS = {
 		"target" : TargetType.ENEMY,
 		"effect" : {
 			"active" : "skill_hit"
+		},
+		"data" : {
+			"ammount" : 5
 		}
 	},
 	"Heal" : { # 0x01

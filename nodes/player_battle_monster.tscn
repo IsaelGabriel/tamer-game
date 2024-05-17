@@ -31,3 +31,6 @@ region_rect = Rect2(32, 0, 16, 16)
 
 [node name="SkillManagerComponent" type="Node" parent="."]
 script = ExtResource("3_xk6cy")
+
+[node name="TargetSelection" type="Sprite2D" parent="."]
+visible = false

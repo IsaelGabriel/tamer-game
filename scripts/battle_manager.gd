@@ -2,6 +2,8 @@ extends Node
 
 class_name BattleManager
 
+static var CURRENT: BattleManager = null
+
 @onready var player_battle_monster_prefab = preload("res://nodes/player_battle_monster.tscn")
 @onready var enemy_battle_monster_prefab = preload("res://nodes/enemy_battle_monster.tscn")
 
@@ -33,6 +35,9 @@ var selected_monster_card_index: int = 0:
 		selected_monster_card_index = value
 
 func _ready():
+	if CURRENT != self and CURRENT != null:
+		CURRENT.queue_free()
+	CURRENT = self
 	# Spawn Battle Monsters
 	var screen_center = get_viewport().content_scale_size / 2
 	for i in range(0, total_player_monsters):

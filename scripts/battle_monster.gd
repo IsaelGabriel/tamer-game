@@ -38,7 +38,3 @@ func _ready():
 func _process(delta):
 	if state != null:
 		state.process(delta)
-
-func get_monster():
-	return monster
-
