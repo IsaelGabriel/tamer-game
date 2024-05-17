@@ -35,6 +35,7 @@ func _ready():
 		monster.scale *= monster_scale
 		add_child(monster)
 		enemy_monsters.append(monster)
+	player_monsters[0].skill_cards_active = true
 
 func calculate_monster_y(index: int, total: int) -> float:
 	var start_y = (get_viewport().content_scale_size.y - monster_y_offset * (total - 1)) / 2
