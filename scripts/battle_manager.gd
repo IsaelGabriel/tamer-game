@@ -13,6 +13,7 @@ class_name BattleManager
 @export_category("Monsters")
 @export_range(1, 10) var total_player_monsters: int = 1
 @export_range(1, 10) var total_enemy_monsters: int = 1
+@export_range(0, 60) var movement_start_countdown: float = 10.0
 
 @export_category("Spawn Area")
 @export var top_margin: float = 0
@@ -53,6 +54,7 @@ func _ready():
 		enemy_monsters.append(monster)
 	
 	generate_monster_cards()
+	movement_countdown()
 
 func calculate_monster_y(index: int, total: int) -> float:
 	var height = get_viewport().content_scale_size.y - (bottom_margin + top_margin)
@@ -70,6 +72,11 @@ func generate_monster_cards():
 		monster_card_container.add_child(card)
 	await get_tree().create_timer(0.001).timeout
 	monster_card_container.get_child(0).selected = true
+
+func movement_countdown():
+	BattleMonster.MOVEMENT_PAUSED = true
+	await get_tree().create_timer(movement_start_countdown).timeout
+	BattleMonster.MOVEMENT_PAUSED = false
 
 func _process(_delta):
 	if monster_card_container.visible:
