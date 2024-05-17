@@ -1,10 +1,15 @@
-[gd_scene load_steps=3 format=3 uid="uid://cp4pqvcpj7qjq"]
+[gd_scene load_steps=2 format=3 uid="uid://cp4pqvcpj7qjq"]
 
-[ext_resource type="PackedScene" uid="uid://dbt11im0ksdo8" path="res://nodes/player_battle_monster.tscn" id="1_080rf"]
-[ext_resource type="PackedScene" uid="uid://bef837h1bw5gu" path="res://nodes/enemy_battle_monster.tscn" id="2_bbqee"]
+[ext_resource type="Script" path="res://scripts/battle_manager.gd" id="3_ewymg"]
 
-[node name="BattleScene" type="Node2D"]
+[node name="BattleScene" type="Node2D" node_paths=PackedStringArray("skill_card_container")]
 texture_filter = 5
+script = ExtResource("3_ewymg")
+skill_card_container = NodePath("UI/SkillCardContainer")
+total_player_monsters = 3
+total_enemy_monsters = 3
+monster_y_offset = 200
+monster_scale = 0.8
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3
@@ -29,22 +34,3 @@ offset_bottom = -140.0
 grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
-
-[node name="PlayerBattleMonster" parent="." node_paths=PackedStringArray("skill_card_container") instance=ExtResource("1_080rf")]
-skill_card_container = NodePath("../UI/SkillCardContainer")
-
-[node name="PlayerBattleMonster2" parent="." node_paths=PackedStringArray("skill_card_container") instance=ExtResource("1_080rf")]
-position = Vector2(0, -10)
-skill_card_container = NodePath("../UI/SkillCardContainer")
-
-[node name="PlayerBattleMonster3" parent="." node_paths=PackedStringArray("skill_card_container") instance=ExtResource("1_080rf")]
-position = Vector2(0, 201)
-skill_card_container = NodePath("../UI/SkillCardContainer")
-
-[node name="EnemyBattleMonster" parent="." instance=ExtResource("2_bbqee")]
-
-[node name="EnemyBattleMonster2" parent="." instance=ExtResource("2_bbqee")]
-position = Vector2(400, -11)
-
-[node name="EnemyBattleMonster3" parent="." instance=ExtResource("2_bbqee")]
-position = Vector2(400, 201)
