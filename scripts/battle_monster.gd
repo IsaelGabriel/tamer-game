@@ -2,6 +2,7 @@ extends Node2D
 
 class_name BattleMonster
 
+const MOVEMENT_INTERPOLATION_MULTIPLIER: float = 0.01
 static var MOVEMENT_PAUSED: bool = false
 
 class BattleMonsterState:

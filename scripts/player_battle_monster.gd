@@ -49,7 +49,7 @@ class BMSForward:
 	
 	func process(delta):
 		if BattleMonster.MOVEMENT_PAUSED: return
-		interpolation_timer += delta * speed * 0.01
+		interpolation_timer += delta * speed * MOVEMENT_INTERPOLATION_MULTIPLIER
 		interpolation_timer = min(interpolation_timer, 1.0)
 		sprite.position = base.position.lerp(goal.position, interpolation_timer)
 		if interpolation_timer >= 1.0:
@@ -74,7 +74,7 @@ class BMSReturn:
 	
 	func process(delta):
 		if BattleMonster.MOVEMENT_PAUSED: return
-		interpolation_timer += delta * speed * 0.01
+		interpolation_timer += delta * speed * MOVEMENT_INTERPOLATION_MULTIPLIER
 		interpolation_timer = min(interpolation_timer, 1.0)
 		sprite.position = goal.position.lerp(base.position, interpolation_timer)
 		if interpolation_timer >= 1.0:
