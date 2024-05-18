@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://lm2c4ump7fnf"]
 
-[ext_resource type="Script" path="res://scripts/skill_card.gd" id="1_6ou5y"]
 [ext_resource type="Texture2D" uid="uid://b8cn5c5ji3hp3" path="res://sprite_atlas.png" id="1_bpr5w"]
+[ext_resource type="Script" path="res://scripts/skills/skill_card.gd" id="2_03jgm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ib546"]
 atlas = ExtResource("1_bpr5w")
@@ -15,7 +15,7 @@ offset_right = 128.0
 offset_bottom = 128.0
 texture = SubResource("AtlasTexture_ib546")
 expand_mode = 2
-script = ExtResource("1_6ou5y")
+script = ExtResource("2_03jgm")
 color = Color(0.192157, 0.537255, 0.639216, 1)
 locked_color = Color(0.1932, 0.239493, 0.28, 1)
 

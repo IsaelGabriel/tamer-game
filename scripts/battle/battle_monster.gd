@@ -111,8 +111,7 @@ signal called_skill(battle_monster: BattleMonster, skill: StringName)
 #endregion
 
 func _ready():
-	skill_manager.monster = monster
-	skill_manager.load_skills()
+	set_monster(monster)
 	
 	if is_player:
 		base.position.x = -(LANE_WIDTH / 2)
@@ -125,5 +124,18 @@ func _ready():
 	current_state = BattleMonsterState.AWAIT_COMMAND
 
 func _process(delta):
+	if not monster.alive: return
 	if current_state:
 		state_func[current_state].call(StateCall.PROCESS, delta)
+
+func set_monster(monster: Monster):
+	self.monster = monster
+	monster.has_died.connect(monster_dead)
+	skill_manager.monster = monster
+	skill_manager.load_skills()
+
+func get_team() -> StringName:
+	return "Ally" if is_player else "Foe"
+
+func monster_dead():
+	DialogHandler.display_dialog("%s %s was slain." % [get_team(), monster.name])

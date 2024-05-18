@@ -38,9 +38,12 @@ func state_skill_card(state_call: StateCall, _delta: float = 0.0):
 		StateCall.START:
 			skill_card_container.visible = true
 		StateCall.PROCESS:
-			var monster = battle.player_monsters[selected_monster_card_index]
-			var hand = monster.skill_manager.hand
-			var index_change = int(Input.is_action_just_pressed("right")) - int(Input.is_action_just_pressed("left"))
+			var monster: BattleMonster = battle.player_monsters[selected_monster_card_index]
+			var hand: Array = monster.skill_manager.hand
+			var index_change: int = int(Input.is_action_just_pressed("right")) - int(Input.is_action_just_pressed("left"))
+			if not monster.monster.alive:
+				current_state = BattleUIState.MONSTER_CARD
+				return
 			selected_skill_card_index += index_change
 			if selected_skill_card_index < 0: selected_skill_card_index = len(hand) - 1
 			elif selected_skill_card_index >= len(hand): selected_skill_card_index = 0
@@ -87,11 +90,14 @@ func state_monster_card(state_call: StateCall, _delta: float = 0.0):
 			target_texture.position = battle.player_monsters[0].sprite.get_global_transform_with_canvas().get_origin()
 			target_texture.visible = true
 		StateCall.PROCESS:
-			selected_monster_card_index += int(Input.is_action_just_pressed("right")) - int(Input.is_action_just_pressed("left"))
+			var index_change = int(Input.is_action_just_pressed("right")) - int(Input.is_action_just_pressed("left"))
+			selected_monster_card_index += index_change
+			if not battle.player_monsters[selected_monster_card_index].monster.alive:
+				selected_monster_card_index += index_change
 			target_texture.position = battle.player_monsters[selected_monster_card_index].sprite.get_global_transform_with_canvas().get_origin()
 			for i in range(0, monster_card_container.get_child_count()):
 				monster_card_container.get_child(i).skill_queue_ready = (not battle.player_monsters[i].skill_queue.is_empty())
-			if Input.is_action_just_pressed("confirm"):
+			if Input.is_action_just_pressed("confirm") and battle.player_monsters[selected_monster_card_index].monster.alive:
 				current_state = BattleUIState.SKILL_CARD
 		StateCall.END:
 			monster_card_container.visible = false
@@ -110,6 +116,9 @@ func state_target_selection(state_call: StateCall, _delta: float = 0.0):
 		StateCall.PROCESS:
 			var target_found = false
 			var target: BattleMonster
+			if not battle.player_monsters[selected_monster_card_index].monster.alive:
+				current_state = BattleUIState.MONSTER_CARD
+				return
 			target_index += int(Input.is_action_just_pressed("down") or Input.is_action_just_pressed("right")) - int(Input.is_action_just_pressed("up") or Input.is_action_just_pressed("left"))
 			match target_type:
 				TargetType.SELF:
@@ -128,6 +137,9 @@ func state_target_selection(state_call: StateCall, _delta: float = 0.0):
 			target_texture.position = target.sprite.get_global_transform_with_canvas().get_origin()
 			
 			if target_found or Input.is_action_just_pressed("confirm"):
+				if not target.monster.alive:
+					DialogHandler.display_dialog("%s %s is dead and can't be targeted." % [target.get_team(), target.monster.name])
+					return
 				battle.player_monsters[selected_monster_card_index].targets[selected_skill_card_index] = target
 				battle.player_monsters[selected_monster_card_index].skill_queue.append(selected_skill_card_index)
 				current_state = BattleUIState.SKILL_CARD

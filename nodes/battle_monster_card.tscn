@@ -26,6 +26,8 @@ offset_bottom = 128.0
 texture = SubResource("AtlasTexture_v162a")
 expand_mode = 2
 script = ExtResource("2_dpayx")
+default_color = Color(0.278431, 0.54902, 0.74902, 1)
+locked_color = Color(0.1848, 0.1848, 0.24, 1)
 
 [node name="Panel" type="Panel" parent="."]
 visible = false

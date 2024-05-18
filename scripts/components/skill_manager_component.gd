@@ -40,13 +40,11 @@ func refresh_skills():
 func skill_hit(target: BattleMonster):
 	var data = SkillList.SKILLS["Hit"]["data"]
 	target.monster.take_damage(monster, data["ammount"])
-	DialogHandler.display_dialog("%s %s took %d damage." % ["Ally" if target.is_player else "Foe", target.monster.name, data["ammount"]])
 	
 func skill_heal(target: BattleMonster):
 	var data = SkillList.SKILLS["Heal"]["data"]
 	if(monster.hp.current < monster.hp.max):
 		var old_hp = monster.hp.current
 		monster.get_healing(monster, data["ammount"])
-		DialogHandler.display_dialog("%s healed itself by %d." % [monster.name, monster.hp.current - old_hp])
 	else:
 		DialogHandler.display_dialog("%s was too healthy to heal itself." % monster.name)
