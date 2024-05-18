@@ -2,7 +2,7 @@ extends Node
 
 class_name SkillManagerComponent
 
-@onready var caster = get_parent()
+@onready var caster: BattleMonster = get_parent()
 @onready var monster: Monster = caster.monster
 
 var _skills = []
@@ -10,14 +10,16 @@ var _skills = []
 var skills_available = []
 var hand = []
 
-func load_skills(skill_names: Array):
-	_skills = skill_names
+func load_skills():
+	_skills = monster.skills.duplicate()
 	refresh_skills()
 	refresh_hand()
 
 func call_skill_from_hand(index: int, target: BattleMonster):
-	DialogHandler.display_dialog("%s %s used %s." % ["Foe" if caster is EnemyBattleMonster else "Ally", monster.name, hand[index]])
-	call(SkillList.SKILLS[hand[index]]["effect"]["active"], target)
+	var skill = hand[index]
+	DialogHandler.display_dialog("%s %s used %s." % ["Ally" if caster.is_player else "Foe", monster.name, hand[index]])
+	call(SkillList.SKILLS[skill]["effect"]["active"], target)
+	caster.called_skill.emit(caster, skill)
 	hand.remove_at(index)
 	if len(hand) == 0: refresh_hand()
 
@@ -33,13 +35,12 @@ func refresh_hand():
 func refresh_skills():
 	skills_available = _skills.duplicate()
 
-
 # Skill functions
 
 func skill_hit(target: BattleMonster):
 	var data = SkillList.SKILLS["Hit"]["data"]
 	target.monster.take_damage(monster, data["ammount"])
-	DialogHandler.display_dialog("%s %s took %d damage." % ["Foe" if target is EnemyBattleMonster else "Ally", target.monster.name, data["ammount"]])
+	DialogHandler.display_dialog("%s %s took %d damage." % ["Ally" if target.is_player else "Foe", target.monster.name, data["ammount"]])
 	
 func skill_heal(target: BattleMonster):
 	var data = SkillList.SKILLS["Heal"]["data"]

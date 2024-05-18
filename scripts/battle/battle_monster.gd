@@ -9,7 +9,13 @@ static var MOVEMENT_PAUSED: bool = false
 var interpolation_timer: float = 0.0
 
 #region Monster
-var monster: Monster = Monster.new("Test Monster")
+var monster: Monster = Monster.new("Test Monster") :
+	set(value):
+		if not value: return
+		monster = value
+		skill_manager.monster = monster
+		skill_manager.load_skills()
+
 var is_player: bool = false: 
 	set(value):
 		is_player = value
@@ -96,7 +102,6 @@ func state_back(state_call: StateCall, delta: float = 0.0):
 				current_state = BattleMonsterState.AWAIT_COMMAND
 		StateCall.END: pass
 
-
 var current_state: BattleMonsterState:
 	set(value):
 		if current_state:
@@ -115,7 +120,7 @@ var next_skill: int = -1: # Skill index from hand to be called next
 		skill_queue.erase(value)
 		for i in range(0, len(skill_queue)):
 			if skill_queue[i] > value: skill_queue[i] -= 1
-		
+
 var skill_queue: Array[int] = [] # Index of the to-be-called skills from hand
 var target: BattleMonster
 
@@ -123,9 +128,8 @@ signal called_skill(battle_monster: BattleMonster, skill: StringName)
 #endregion
 
 func _ready():
-	skill_manager.load_skills(monster.skills)
+	skill_manager.load_skills()
 	sprite.position = base.position
-	is_player = false
 
 func _process(delta):
 	if current_state:
