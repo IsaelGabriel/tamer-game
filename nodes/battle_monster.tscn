@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://f7tc44f6tfx8"]
+
+[ext_resource type="Script" path="res://scripts/battle/battle_monster.gd" id="1_47qyl"]
+[ext_resource type="Texture2D" uid="uid://b8cn5c5ji3hp3" path="res://sprite_atlas.png" id="2_kuyms"]
+[ext_resource type="Script" path="res://scripts/components/skill_manager_component.gd" id="3_3i0pf"]
+
+[node name="BattleMonster" type="Node2D"]
+texture_filter = 3
+scale = Vector2(0.6, 0.6)
+script = ExtResource("1_47qyl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(5, 5)
+texture = ExtResource("2_kuyms")
+region_enabled = true
+region_rect = Rect2(0, 0, 16, 16)
+
+[node name="Base" type="Sprite2D" parent="."]
+position = Vector2(-300, 0)
+scale = Vector2(5, 5)
+texture = ExtResource("2_kuyms")
+region_enabled = true
+region_rect = Rect2(32, 0, 16, 16)
+
+[node name="Goal" type="Sprite2D" parent="."]
+position = Vector2(300, 0)
+scale = Vector2(5, 5)
+texture = ExtResource("2_kuyms")
+region_enabled = true
+region_rect = Rect2(32, 0, 16, 16)
+
+[node name="SkillManagerComponent" type="Node" parent="."]
+script = ExtResource("3_3i0pf")
