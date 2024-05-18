@@ -9,10 +9,8 @@ atlas = ExtResource("2_ogm48")
 region = Rect2(32, 0, 16, 16)
 margin = Rect2(-8, -8, 0, 0)
 
-[node name="BattleScene" type="Node" node_paths=PackedStringArray("ui_container", "target_texture", "ui_manager")]
+[node name="BattleScene" type="Node" node_paths=PackedStringArray("ui_manager")]
 script = ExtResource("3_ewymg")
-ui_container = NodePath("UI/MarginContainer")
-target_texture = NodePath("UI/TargetTexture")
 ui_manager = NodePath("UI")
 total_player_monsters = 3
 total_enemy_monsters = 3
@@ -41,7 +39,6 @@ visible = false
 layout_mode = 2
 
 [node name="TargetTexture" type="TextureRect" parent="UI"]
-visible = false
 texture_filter = 1
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2

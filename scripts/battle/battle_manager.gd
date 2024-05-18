@@ -7,8 +7,6 @@ static var CURRENT: BattleManager = null
 const BATTLE_MONSTER_PREFAB = preload("res://nodes/battle_monster.tscn")
 
 @export_category("UI")
-@export var ui_container: MarginContainer
-@export var target_texture: TextureRect
 @export var ui_manager: BattleUIManager
 
 @export_category("Monsters")
