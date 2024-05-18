@@ -28,12 +28,14 @@ var state_func: Dictionary = {
 func state_skill_card(state_call: StateCall, _delta: float = 0.0):
 	match state_call:
 		StateCall.START:
-			battle.player_monsters[selected_monster_card_index].skill_cards_active = true
+			#battle.player_monsters[selected_monster_card_index].skill_cards_active = true
+			pass
 		StateCall.PROCESS:
 			if Input.is_action_just_pressed("ui_down"):
 				current_state = BattleUIState.MONSTER_CARD
 		StateCall.END:
-			battle.player_monsters[selected_monster_card_index].skill_cards_active = false
+			#battle.player_monsters[selected_monster_card_index].skill_cards_active = false
+			pass
 
 func state_monster_card(state_call: StateCall, _delta: float = 0.0):
 	match state_call:
