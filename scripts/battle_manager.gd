@@ -11,6 +11,7 @@ static var CURRENT: BattleManager = null
 
 @export_category("UI")
 @export var ui_container: MarginContainer
+@export var target_texture: TextureRect
 
 @export_category("Monsters")
 @export_range(1, 10) var total_player_monsters: int = 1
