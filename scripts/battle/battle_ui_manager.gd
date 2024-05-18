@@ -36,7 +36,6 @@ var state_func: Dictionary = {
 func state_skill_card(state_call: StateCall, _delta: float = 0.0):
 	match state_call:
 		StateCall.START:
-			selected_skill_card_index = 0
 			skill_card_container.visible = true
 		StateCall.PROCESS:
 			var monster = battle.player_monsters[selected_monster_card_index]
@@ -76,11 +75,13 @@ func state_monster_card(state_call: StateCall, _delta: float = 0.0):
 	match state_call:
 		StateCall.START:
 			monster_card_container.visible = true
-			target_texture.visible = true
 			target_texture.position = battle.player_monsters[0].sprite.get_global_transform_with_canvas().get_origin()
+			target_texture.visible = true
 		StateCall.PROCESS:
 			selected_monster_card_index += int(Input.is_action_just_pressed("right")) - int(Input.is_action_just_pressed("left"))
 			target_texture.position = battle.player_monsters[selected_monster_card_index].sprite.get_global_transform_with_canvas().get_origin()
+			for i in range(0, monster_card_container.get_child_count()):
+				monster_card_container.get_child(i).skill_queue_ready = (not battle.player_monsters[i].skill_queue.is_empty())
 			if Input.is_action_just_pressed("confirm"):
 				current_state = BattleUIState.SKILL_CARD
 		StateCall.END:
@@ -90,15 +91,17 @@ func state_monster_card(state_call: StateCall, _delta: float = 0.0):
 func state_target_selection(state_call: StateCall, _delta: float = 0.0):
 	match state_call:
 		StateCall.START:
+			BattleMonster.MOVEMENT_PAUSED = true
 			skill_card_container.visible = true
 			target_type = SkillList.SKILLS[battle.player_monsters[selected_monster_card_index].skill_manager.hand[selected_skill_card_index]]["target"]
 			target_index = 0
-			target_texture.visible = true
+			target_texture.visible = target_type != SkillList.TargetType.SELF
+			target_texture.position = battle.player_monsters[0].sprite.get_global_transform_with_canvas().get_origin()
 			
 		StateCall.PROCESS:
 			var target_found = false
 			var target: BattleMonster
-			target_index += int(Input.is_action_just_pressed("down")) - int(Input.is_action_just_pressed("up"))
+			target_index += int(Input.is_action_just_pressed("down") or Input.is_action_just_pressed("right")) - int(Input.is_action_just_pressed("up") or Input.is_action_just_pressed("left"))
 			match target_type:
 				SkillList.TargetType.SELF:
 					target = battle.player_monsters[selected_monster_card_index]
@@ -124,6 +127,7 @@ func state_target_selection(state_call: StateCall, _delta: float = 0.0):
 			if Input.is_action_just_pressed("cancel"):
 				current_state = BattleUIState.SKILL_CARD
 		StateCall.END: 
+			BattleMonster.MOVEMENT_PAUSED = false
 			skill_card_container.visible = false
 			target_texture.visible = false
 

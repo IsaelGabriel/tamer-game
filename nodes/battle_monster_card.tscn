@@ -53,6 +53,14 @@ theme_override_constants/margin_bottom = 5
 layout_mode = 2
 alignment = 1
 
+[node name="QueueLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "[NO SKILLS ON QUEUE]"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
 [node name="NameLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
