@@ -1,13 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://bef837h1bw5gu"]
 
-[ext_resource type="Script" path="res://scripts/enemy_battle_monster.gd" id="1_f0mct"]
+[ext_resource type="Script" path="res://scripts/battle/enemy_battle_monster.gd" id="1_o3mkq"]
 [ext_resource type="Texture2D" uid="uid://b8cn5c5ji3hp3" path="res://sprite_atlas.png" id="2_ljg5o"]
 [ext_resource type="Script" path="res://scripts/components/skill_manager_component.gd" id="3_uryav"]
 
 [node name="EnemyBattleMonster" type="Node2D"]
 texture_filter = 3
 scale = Vector2(0.6, 0.6)
-script = ExtResource("1_f0mct")
+script = ExtResource("1_o3mkq")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(5, 5)

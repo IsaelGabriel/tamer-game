@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bw5xq5nabgy78"]
 
-[ext_resource type="Script" path="res://scripts/battle_monster_card.gd" id="1_23n1n"]
 [ext_resource type="Texture2D" uid="uid://b8cn5c5ji3hp3" path="res://sprite_atlas.png" id="1_qtc63"]
+[ext_resource type="Script" path="res://scripts/battle/battle_monster_card.gd" id="2_dpayx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v162a"]
 atlas = ExtResource("1_qtc63")
@@ -25,7 +25,7 @@ offset_right = 128.0
 offset_bottom = 128.0
 texture = SubResource("AtlasTexture_v162a")
 expand_mode = 2
-script = ExtResource("1_23n1n")
+script = ExtResource("2_dpayx")
 
 [node name="Panel" type="Panel" parent="."]
 visible = false

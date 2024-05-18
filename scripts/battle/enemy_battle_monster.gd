@@ -1,4 +1,4 @@
-extends "res://scripts/battle_monster.gd"
+extends BattleMonster
 
 class_name EnemyBattleMonster
 
