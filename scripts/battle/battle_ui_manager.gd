@@ -2,6 +2,12 @@ extends Control
 
 class_name BattleUIManager
 
+#region ConstImports
+const StateCall = Constants.StateCall
+#endregion
+
+const TargetType = Constants.TargetType
+
 #region Prefabs
 const PREFABS = {
 	"monster_card" = preload("res://nodes/battle_monster_card.tscn"),
@@ -16,12 +22,6 @@ enum BattleUIState {
 	MONSTER_CARD,
 	TARGET_SELECTION,
 	SKILL_ANIMATION
-}
-
-enum StateCall {
-	START,
-	PROCESS,
-	END
 }
 
 var state_information: Dictionary = {}
@@ -104,7 +104,7 @@ func state_target_selection(state_call: StateCall, _delta: float = 0.0):
 			skill_card_container.visible = true
 			target_type = SkillList.SKILLS[battle.player_monsters[selected_monster_card_index].skill_manager.hand[selected_skill_card_index]]["target"]
 			target_index = 0
-			target_texture.visible = target_type != SkillList.TargetType.SELF
+			target_texture.visible = target_type != TargetType.SELF
 			target_texture.position = battle.player_monsters[0].sprite.get_global_transform_with_canvas().get_origin()
 			
 		StateCall.PROCESS:
@@ -112,15 +112,15 @@ func state_target_selection(state_call: StateCall, _delta: float = 0.0):
 			var target: BattleMonster
 			target_index += int(Input.is_action_just_pressed("down") or Input.is_action_just_pressed("right")) - int(Input.is_action_just_pressed("up") or Input.is_action_just_pressed("left"))
 			match target_type:
-				SkillList.TargetType.SELF:
+				TargetType.SELF:
 					target = battle.player_monsters[selected_monster_card_index]
 					target_texture.visible = false
 					target_found = true
-				SkillList.TargetType.ALLY:
+				TargetType.ALLY:
 					if target_index < 0: target_index = battle.total_player_monsters - 1
 					if target_index >= battle.total_player_monsters: target_index = 0
 					target = battle.player_monsters[target_index]
-				SkillList.TargetType.ENEMY:
+				TargetType.ENEMY:
 					if target_index < 0: target_index = battle.total_enemy_monsters - 1
 					if target_index >= battle.total_enemy_monsters: target_index = 0
 					target = battle.enemy_monsters[target_index]
@@ -179,7 +179,7 @@ var selected_skill_card_index: int
 #endregion
 
 #region TargetSelection
-var target_type: SkillList.TargetType
+var target_type: TargetType
 var target_index: int
 
 #endregion

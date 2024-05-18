@@ -2,6 +2,10 @@ extends Node2D
 
 class_name BattleMonster
 
+#region ConstImports
+const StateCall = Constants.StateCall
+#endregion
+
 const LANE_WIDTH: float = 600
 const MOVEMENT_INTERPOLATION_MULTIPLIER: float = 0.01
 static var MOVEMENT_PAUSED: bool = false
@@ -33,12 +37,6 @@ enum BattleMonsterState {
 	FORWARD,
 	USE_SKILL,
 	BACK,
-}
-
-enum StateCall {
-	START,
-	PROCESS,
-	END
 }
 
 var state_func: Dictionary = {

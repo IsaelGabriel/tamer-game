@@ -1,15 +1,10 @@
 class_name SkillList
 
-enum SkillType {
-	PHYSICAL,
-	EFFECT
-}
+#region ConstImports
+const TargetType = Constants.TargetType
+const SkillType = Constants.SkillType
 
-enum TargetType {
-	SELF,
-	ALLY,
-	ENEMY
-}
+#endregion
 
 const SKILLS = {
 	"Hit" : { # 0x00
