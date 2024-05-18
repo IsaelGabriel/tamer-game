@@ -19,19 +19,22 @@ func _process(delta):
 	if current_time > 0:
 		current_time -= delta
 	else:
-		handle_dialog(delta)
+		handle_dialog()
 
 func show_dialog(text: String):
 	dialog_text.text = ""
 	next_icon.modulate.a = 0x0
 	current_text = text
 
-func handle_dialog(delta):
+func handle_dialog():
 	if len(dialog_text.text) < len(current_text):
-		var time_multiplier = 0.5 if Input.is_action_pressed("ui_accept") else 1.0
+		if Input.is_action_just_pressed("cancel"):
+			dialog_text.text = current_text
+			return
+		var time_multiplier = 0.5 if Input.is_action_pressed("confirm") else 1.0
 		dialog_text.text += current_text[len(dialog_text.text)]
 		current_time = CHAR_TIME * time_multiplier
 	else:
 		next_icon.modulate.a = 0xFF
-		if Input.is_action_just_pressed("ui_accept"):
+		if Input.is_action_just_pressed("confirm"):
 			DialogHandler.end_dialog()
