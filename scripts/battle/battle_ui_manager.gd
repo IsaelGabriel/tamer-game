@@ -76,12 +76,16 @@ func state_monster_card(state_call: StateCall, _delta: float = 0.0):
 	match state_call:
 		StateCall.START:
 			monster_card_container.visible = true
+			target_texture.visible = true
+			target_texture.position = battle.player_monsters[0].sprite.get_global_transform_with_canvas().get_origin()
 		StateCall.PROCESS:
 			selected_monster_card_index += int(Input.is_action_just_pressed("right")) - int(Input.is_action_just_pressed("left"))
+			target_texture.position = battle.player_monsters[selected_monster_card_index].sprite.get_global_transform_with_canvas().get_origin()
 			if Input.is_action_just_pressed("confirm"):
 				current_state = BattleUIState.SKILL_CARD
 		StateCall.END:
 			monster_card_container.visible = false
+			target_texture.visible = false
 
 func state_target_selection(state_call: StateCall, _delta: float = 0.0):
 	match state_call:
