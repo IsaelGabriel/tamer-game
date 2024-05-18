@@ -2,8 +2,8 @@ extends Control
 
 class_name SkillCard
 
-@export var name_label: Label
-@export var index_label: Label
+@onready var name_label: Label = $VBoxContainer/NameLabel
+@onready var index_label: Label = $VBoxContainer/IndexLabel
 
 var skill_name: String = "Skill" :
 	set(value):

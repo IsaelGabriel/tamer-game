@@ -53,7 +53,7 @@ func state_await_command(state_call: StateCall, delta: float = 0.0):
 	match state_call:
 		StateCall.START: pass
 		StateCall.PROCESS:
-			if skill_queue.is_empty() or not target: return
+			if skill_queue.is_empty(): return
 			next_skill = skill_queue[0]
 			current_state = BattleMonsterState.FORWARD
 		StateCall.END: pass
@@ -77,9 +77,9 @@ func state_use_skill(state_call: StateCall, delta: float = 0.0):
 		StateCall.START: pass
 		StateCall.PROCESS:
 			if MOVEMENT_PAUSED: return
-			skill_manager.call_skill_from_hand(next_skill, target)
+			skill_manager.call_skill_from_hand(next_skill, targets[next_skill])
+			targets.erase(next_skill)
 			next_skill = -1
-			target = null
 			current_state = BattleMonsterState.BACK
 		StateCall.END: pass
 
@@ -116,8 +116,8 @@ var next_skill: int = -1: # Skill index from hand to be called next
 		for i in range(0, len(skill_queue)):
 			if skill_queue[i] > value: skill_queue[i] -= 1
 
-var skill_queue: Array[int] = [] # Index of the to-be-called skills from hand
-var target: BattleMonster
+var skill_queue: Array[int] = [] # Index of the to-be-called skills from hand # [index, target] pairs
+var targets: Dictionary
 
 signal called_skill(battle_monster: BattleMonster, skill: StringName)
 #endregion

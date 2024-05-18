@@ -70,4 +70,4 @@ func _process(_delta):
 	for monster in enemy_monsters:
 		if monster.skill_queue.is_empty() and monster.current_state == BattleMonster.BattleMonsterState.AWAIT_COMMAND:
 			monster.skill_queue.append(0)
-			monster.target = player_monsters[0]
+			monster.targets[0] = player_monsters[0]
