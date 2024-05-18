@@ -51,6 +51,9 @@ func state_skill_card(state_call: StateCall, _delta: float = 0.0):
 				var card = skill_card_container.get_child(i)
 				card.skill_name = hand[i]
 				card.index = monster.skill_queue.find(i)
+				if monster.next_skill != -1:
+					if card.index != -1: card.index += 1
+					if i == monster.next_skill: card.index = 0
 				card.selected = i == selected_skill_card_index
 			for i in range(len(hand), skill_card_container.get_child_count()):
 				skill_card_container.get_child(i).visible = false
