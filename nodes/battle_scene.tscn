@@ -8,10 +8,11 @@
 atlas = ExtResource("2_ogm48")
 region = Rect2(32, 0, 16, 16)
 
-[node name="BattleScene" type="Node" node_paths=PackedStringArray("ui_container", "target_texture")]
+[node name="BattleScene" type="Node" node_paths=PackedStringArray("ui_container", "target_texture", "ui_manager")]
 script = ExtResource("3_ewymg")
 ui_container = NodePath("UI/MarginContainer")
 target_texture = NodePath("UI/TargetTexture")
+ui_manager = NodePath("UI")
 total_player_monsters = 3
 total_enemy_monsters = 3
 movement_start_countdown = 2.0
