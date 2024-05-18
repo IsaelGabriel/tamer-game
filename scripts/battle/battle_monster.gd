@@ -13,12 +13,7 @@ static var MOVEMENT_PAUSED: bool = false
 var interpolation_timer: float = 0.0
 
 #region Monster
-var monster: Monster = Monster.new("Test Monster") :
-	set(value):
-		if not value: return
-		monster = value
-		skill_manager.monster = monster
-		skill_manager.load_skills()
+var monster: Monster
 
 var is_player: bool
 #endregion
@@ -116,6 +111,7 @@ signal called_skill(battle_monster: BattleMonster, skill: StringName)
 #endregion
 
 func _ready():
+	skill_manager.monster = monster
 	skill_manager.load_skills()
 	
 	if is_player:
@@ -124,6 +120,7 @@ func _ready():
 	else:
 		base.position.x = LANE_WIDTH / 2
 		goal.position.x = -(LANE_WIDTH / 2)
+	
 	
 	current_state = BattleMonsterState.AWAIT_COMMAND
 

@@ -3,7 +3,7 @@ extends Node
 class_name SkillManagerComponent
 
 @onready var caster: BattleMonster = get_parent()
-@onready var monster: Monster = caster.monster
+@onready var monster: Monster
 
 var _skills = []
 

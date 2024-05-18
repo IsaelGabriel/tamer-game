@@ -30,6 +30,7 @@ func _ready():
 	var screen_center = get_viewport().content_scale_size / 2
 	for i in range(0, total_player_monsters):
 		var monster = BATTLE_MONSTER_PREFAB.instantiate()
+		monster.monster = Monster.new("Test Monster")
 		#var skill_card_container = HBoxContainer.new()
 		#skill_card_container.alignment = BoxContainer.ALIGNMENT_CENTER
 		#monster.skill_card_container = skill_card_container
@@ -46,6 +47,7 @@ func _ready():
 		monster.is_player = false
 		monster.position = Vector2(screen_center.x * 3 / 2, calculate_monster_y(i, total_enemy_monsters))
 		monster.scale *= monster_scale
+		monster.monster = Monster.new_random([0, 20], [5, 30], [0.1, 0.7], [1, 5], [1, 5])
 		add_child(monster)
 		monster.sprite.position = monster.base.position
 		enemy_monsters.append(monster)
