@@ -53,6 +53,7 @@ func state_skill_card(state_call: StateCall, _delta: float = 0.0):
 				if i >= skill_card_container.get_child_count():
 					skill_card_container.add_child(PREFABS.skill_card.instantiate())
 				var card = skill_card_container.get_child(i)
+				card.visible = true
 				card.skill_name = hand[i]
 				card.index = monster.skill_queue.find(i)
 				card.locked = false

@@ -78,7 +78,6 @@ func state_use_skill(state_call: StateCall, delta: float = 0.0):
 		StateCall.PROCESS:
 			if MOVEMENT_PAUSED: return
 			skill_manager.call_skill_from_hand(next_skill, targets[next_skill])
-			targets.erase(next_skill)
 			skill_queue.erase(next_skill)
 			for i in range(0, len(skill_queue)):
 				if skill_queue[i] > next_skill: skill_queue[i] -= 1
