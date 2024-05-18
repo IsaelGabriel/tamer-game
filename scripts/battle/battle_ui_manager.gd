@@ -40,9 +40,14 @@ func state_skill_card(state_call: StateCall, _delta: float = 0.0):
 		StateCall.PROCESS:
 			var monster = battle.player_monsters[selected_monster_card_index]
 			var hand = monster.skill_manager.hand
-			selected_skill_card_index += int(Input.is_action_just_pressed("right")) - int(Input.is_action_just_pressed("left"))
+			var index_change = int(Input.is_action_just_pressed("right")) - int(Input.is_action_just_pressed("left"))
+			selected_skill_card_index += index_change
 			if selected_skill_card_index < 0: selected_skill_card_index = len(hand) - 1
 			elif selected_skill_card_index >= len(hand): selected_skill_card_index = 0
+			if selected_skill_card_index == monster.next_skill:
+				selected_skill_card_index += index_change
+				if selected_skill_card_index < 0: selected_skill_card_index = len(hand) - 1
+				elif selected_skill_card_index >= len(hand): selected_skill_card_index = 0
 			
 			for i in range(0, len(hand)):
 				if i >= skill_card_container.get_child_count():
@@ -50,9 +55,12 @@ func state_skill_card(state_call: StateCall, _delta: float = 0.0):
 				var card = skill_card_container.get_child(i)
 				card.skill_name = hand[i]
 				card.index = monster.skill_queue.find(i)
+				card.locked = false
 				if monster.next_skill != -1:
 					if card.index != -1: card.index += 1
-					if i == monster.next_skill: card.index = 0
+					if i == monster.next_skill:
+						card.index = 0
+						card.locked = true
 				card.selected = i == selected_skill_card_index
 			for i in range(len(hand), skill_card_container.get_child_count()):
 				skill_card_container.get_child(i).visible = false
