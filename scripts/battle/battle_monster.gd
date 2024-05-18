@@ -16,15 +16,7 @@ var monster: Monster = Monster.new("Test Monster") :
 		skill_manager.monster = monster
 		skill_manager.load_skills()
 
-var is_player: bool = false: 
-	set(value):
-		is_player = value
-		if is_player:
-			base.position.x = -(LANE_WIDTH / 2)
-			goal.position.x = LANE_WIDTH / 2
-		else:
-			base.position.x = LANE_WIDTH / 2
-			goal.position.x = -(LANE_WIDTH / 2)
+var is_player: bool
 #endregion
 
 #region Elements
@@ -36,6 +28,7 @@ var is_player: bool = false:
 
 #region State
 enum BattleMonsterState {
+	NONE,
 	AWAIT_COMMAND,
 	FORWARD,
 	USE_SKILL,
@@ -49,6 +42,7 @@ enum StateCall {
 }
 
 var state_func: Dictionary = {
+	BattleMonsterState.NONE: func(state_call: StateCall, delta: float = 0.0): return,
 	BattleMonsterState.AWAIT_COMMAND: state_await_command,
 	BattleMonsterState.FORWARD: state_forward,
 	BattleMonsterState.USE_SKILL: state_use_skill,
@@ -59,7 +53,8 @@ func state_await_command(state_call: StateCall, delta: float = 0.0):
 	match state_call:
 		StateCall.START: pass
 		StateCall.PROCESS:
-			if next_skill == -1 or not target: return
+			if skill_queue.is_empty() or not target: return
+			next_skill = skill_queue[0]
 			current_state = BattleMonsterState.FORWARD
 		StateCall.END: pass
 
@@ -104,10 +99,10 @@ func state_back(state_call: StateCall, delta: float = 0.0):
 
 var current_state: BattleMonsterState:
 	set(value):
-		if current_state:
+		if current_state != null:
 			state_func[current_state].call(StateCall.END)
 		current_state = value
-		if value:
+		if value != null:
 			state_func[current_state].call(StateCall.START)
 
 #endregion
@@ -129,7 +124,15 @@ signal called_skill(battle_monster: BattleMonster, skill: StringName)
 
 func _ready():
 	skill_manager.load_skills()
-	sprite.position = base.position
+	
+	if is_player:
+		base.position.x = -(LANE_WIDTH / 2)
+		goal.position.x = LANE_WIDTH / 2
+	else:
+		base.position.x = LANE_WIDTH / 2
+		goal.position.x = -(LANE_WIDTH / 2)
+	
+	current_state = BattleMonsterState.AWAIT_COMMAND
 
 func _process(delta):
 	if current_state:

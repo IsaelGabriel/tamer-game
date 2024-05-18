@@ -4,8 +4,7 @@ class_name BattleManager
 
 static var CURRENT: BattleManager = null
 
-@onready var player_battle_monster_prefab = preload("res://nodes/player_battle_monster.tscn")
-@onready var enemy_battle_monster_prefab = preload("res://nodes/enemy_battle_monster.tscn")
+const BATTLE_MONSTER_PREFAB = preload("res://nodes/battle_monster.tscn")
 
 @export_category("UI")
 @export var ui_container: MarginContainer
@@ -22,8 +21,8 @@ static var CURRENT: BattleManager = null
 @export var bottom_margin: float = 0
 @export var monster_scale: float = 1.0
 
-var player_monsters: Array[PlayerBattleMonster]
-var enemy_monsters: Array[EnemyBattleMonster]
+var player_monsters: Array[BattleMonster]
+var enemy_monsters: Array[BattleMonster]
 
 func _ready():
 	if CURRENT != self and CURRENT != null:
@@ -32,21 +31,25 @@ func _ready():
 	# Spawn Battle Monsters
 	var screen_center = get_viewport().content_scale_size / 2
 	for i in range(0, total_player_monsters):
-		var monster = player_battle_monster_prefab.instantiate()
-		var skill_card_container = HBoxContainer.new()
-		skill_card_container.alignment = BoxContainer.ALIGNMENT_CENTER
-		monster.skill_card_container = skill_card_container
+		var monster = BATTLE_MONSTER_PREFAB.instantiate()
+		#var skill_card_container = HBoxContainer.new()
+		#skill_card_container.alignment = BoxContainer.ALIGNMENT_CENTER
+		#monster.skill_card_container = skill_card_container
+		monster.is_player = true
 		monster.position = Vector2(screen_center.x / 2, calculate_monster_y(i, total_player_monsters))
 		monster.scale *= monster_scale
-		ui_container.add_child(skill_card_container)
+		#ui_container.add_child(skill_card_container)
 		add_child(monster)
+		monster.sprite.position = monster.base.position
 		player_monsters.append(monster)
 	
 	for i in range(0, total_enemy_monsters):
-		var monster = enemy_battle_monster_prefab.instantiate()
+		var monster = BATTLE_MONSTER_PREFAB.instantiate()
+		monster.is_player = false
 		monster.position = Vector2(screen_center.x * 3 / 2, calculate_monster_y(i, total_enemy_monsters))
 		monster.scale *= monster_scale
 		add_child(monster)
+		monster.sprite.position = monster.base.position
 		enemy_monsters.append(monster)
 	
 	ui_manager.start()
@@ -62,3 +65,9 @@ func movement_countdown():
 	BattleMonster.MOVEMENT_PAUSED = true
 	await get_tree().create_timer(movement_start_countdown).timeout
 	BattleMonster.MOVEMENT_PAUSED = false
+
+func _process(_delta):
+	for monster in enemy_monsters:
+		if monster.skill_queue.is_empty() and monster.current_state == BattleMonster.BattleMonsterState.AWAIT_COMMAND:
+			monster.skill_queue.append(0)
+			monster.target = player_monsters[0]
