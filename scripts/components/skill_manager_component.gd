@@ -25,7 +25,7 @@ func call_skill_from_hand(index: int, target: BattleMonster):
 
 func refresh_hand():
 	if len(hand) >= 4: return
-	for i in range(min(4-len(hand), len(skills_available))):
+	for i in range(min(4, len(skills_available))):
 		var rng = randi() % len(skills_available)
 		hand.append(skills_available[rng])
 		skills_available.remove_at(rng)

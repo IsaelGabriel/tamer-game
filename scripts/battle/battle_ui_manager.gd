@@ -127,13 +127,14 @@ func state_target_selection(state_call: StateCall, _delta: float = 0.0):
 			target_texture.position = target.sprite.get_global_transform_with_canvas().get_origin()
 			
 			if target_found or Input.is_action_just_pressed("confirm"):
-				battle.player_monsters[selected_monster_card_index].skill_queue.append(selected_skill_card_index)
 				battle.player_monsters[selected_monster_card_index].targets[selected_skill_card_index] = target
+				battle.player_monsters[selected_monster_card_index].skill_queue.append(selected_skill_card_index)
 				current_state = BattleUIState.SKILL_CARD
 				return
 			
 			if Input.is_action_just_pressed("cancel"):
 				current_state = BattleUIState.SKILL_CARD
+				
 		StateCall.END: 
 			BattleMonster.MOVEMENT_PAUSED = false
 			skill_card_container.visible = false
