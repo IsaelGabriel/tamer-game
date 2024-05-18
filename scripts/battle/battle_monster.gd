@@ -63,7 +63,7 @@ func state_forward(state_call: StateCall, delta: float = 0.0):
 			sprite.flip_h = not is_player
 		StateCall.PROCESS:
 			if BattleMonster.MOVEMENT_PAUSED: return
-			interpolation_timer += delta * monster.speed * MOVEMENT_INTERPOLATION_MULTIPLIER
+			interpolation_timer += delta * monster.speed.current * MOVEMENT_INTERPOLATION_MULTIPLIER
 			interpolation_timer = min(interpolation_timer, 1.0)
 			sprite.position = base.position.lerp(goal.position, interpolation_timer)
 			if interpolation_timer >= 1.0:
@@ -90,7 +90,7 @@ func state_back(state_call: StateCall, delta: float = 0.0):
 			sprite.flip_h = is_player
 		StateCall.PROCESS:
 			if BattleMonster.MOVEMENT_PAUSED: return
-			interpolation_timer += delta * monster.speed * MOVEMENT_INTERPOLATION_MULTIPLIER
+			interpolation_timer += delta * monster.speed.current * MOVEMENT_INTERPOLATION_MULTIPLIER
 			interpolation_timer = min(interpolation_timer, 1.0)
 			sprite.position = goal.position.lerp(base.position, interpolation_timer)
 			if interpolation_timer >= 1.0:

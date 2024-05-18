@@ -19,6 +19,6 @@ var skill_queue_ready: bool = false
 func _process(_delta):
 	if monster == null: return
 	name_label.text = monster.name
-	hp_label.text = "%d / %d" % [monster.hp, monster.max_hp]
+	hp_label.text = "%d / %d" % [monster.hp.current, monster.hp.max]
 	status_label.text = ""
 	queue_label.text = "" if skill_queue_ready else "[ADD SKILLS]"
