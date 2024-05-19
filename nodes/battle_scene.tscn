@@ -14,7 +14,6 @@ script = ExtResource("3_ewymg")
 ui_manager = NodePath("UI")
 total_player_monsters = 3
 total_enemy_monsters = 3
-movement_start_countdown = 2.0
 top_margin = 150.0
 bottom_margin = 150.0
 monster_scale = 0.8

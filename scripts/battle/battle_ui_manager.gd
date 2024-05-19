@@ -109,7 +109,7 @@ func state_target_selection(state_call: StateCall, _delta: float = 0.0):
 			BattleMonster.MOVEMENT_PAUSED = true
 			skill_card_container.visible = true
 			target_type = battle.player_monsters[selected_monster_card_index].skill_manager.hand[selected_skill_card_index].target_type
-			target_index = 0
+			target_index = selected_monster_card_index % battle.total_enemy_monsters
 			target_texture.visible = target_type != TargetType.SELF
 			target_texture.position = battle.player_monsters[0].sprite.get_global_transform_with_canvas().get_origin()
 			
@@ -199,6 +199,7 @@ var target_index: int
 @onready var battle: BattleManager = get_parent()
 
 func start():
+	target_texture.visible = false
 	generate_monster_cards()
 	skill_card_container = HBoxContainer.new()
 	skill_card_container.alignment = BoxContainer.ALIGNMENT_CENTER
