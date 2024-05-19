@@ -8,7 +8,7 @@ var atk: MonsterAttribute
 var def: MonsterAttribute
 var alive: bool = true
 
-var skills = ["Hit", "Hit", "Hit", "Hit", "Heal", "Heal", "Heal"]
+var skills = ["hit", "hit", "hit", "hit", "heal", "heal", "heal"]
 
 signal taken_damage(monster: Monster, ammount: int)
 signal got_healed(monster: Monster, ammount: int)

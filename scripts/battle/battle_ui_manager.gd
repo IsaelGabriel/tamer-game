@@ -57,7 +57,7 @@ func state_skill_card(state_call: StateCall, _delta: float = 0.0):
 					skill_card_container.add_child(PREFABS.skill_card.instantiate())
 				var card = skill_card_container.get_child(i)
 				card.visible = true
-				card.skill_name = hand[i]
+				card.skill_name = hand[i].name
 				card.index = monster.skill_queue.find(i)
 				card.locked = false
 				if monster.next_skill != -1:
@@ -108,7 +108,7 @@ func state_target_selection(state_call: StateCall, _delta: float = 0.0):
 		StateCall.START:
 			BattleMonster.MOVEMENT_PAUSED = true
 			skill_card_container.visible = true
-			target_type = SkillList.SKILLS[battle.player_monsters[selected_monster_card_index].skill_manager.hand[selected_skill_card_index]]["target"]
+			target_type = battle.player_monsters[selected_monster_card_index].skill_manager.hand[selected_skill_card_index].target_type
 			target_index = 0
 			target_texture.visible = target_type != TargetType.SELF
 			target_texture.position = battle.player_monsters[0].sprite.get_global_transform_with_canvas().get_origin()

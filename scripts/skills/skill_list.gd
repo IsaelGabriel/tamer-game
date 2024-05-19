@@ -6,27 +6,17 @@ const SkillType = Constants.SkillType
 
 #endregion
 
-const SKILLS = {
-	"Hit" : { # 0x00
-		"type" : SkillType.PHYSICAL,
-		"description" : "Hit once, causing physical damage.",
-		"target" : TargetType.ENEMY,
-		"effect" : {
-			"active" : "skill_hit"
-		},
-		"data" : {
-			"ammount" : 5
-		}
-	},
-	"Heal" : { # 0x01
-		"type" : SkillType.EFFECT,
-		"description" : "Restores HP.",
-		"target" : TargetType.SELF,
-		"effect" : {
-			"active" : "skill_heal"
-		},
-		"data" : {
-			"ammount" : 5
-		}
-	}
+static var SKILLS = {
+	"hit" : Skill.new("Hit", # Name
+						"Hit once, causing physical damage.", # Description
+						0.75, # Accuracy
+						SkillType.PHYSICAL, # Skill Type
+						TargetType.ENEMY, # Target Type
+						"skill_hit"),
+	"heal" : Skill.new("Self Heal", # Name
+						"Restores HP.", # Description
+						1.0, # Accuracy
+						SkillType.EFFECT, # Skill Type
+						TargetType.SELF, # Target Type
+						"skill_heal"),
 }
